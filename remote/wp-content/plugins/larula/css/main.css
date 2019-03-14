@@ -70,6 +70,7 @@
 .home .slider-container .slides {
   position: relative;
   height: 100%;
+  line-height: initial;
 }
 
 .home .slider-container li {
@@ -209,4 +210,20 @@
 .home .slider-container .slider-paging .page-button:active,
 .home .slider-container .slider-paging .page-button:focus {
   outline: none;
+}
+
+/* Slider content */
+.home .slider-container .row {
+  margin: 0;
+  align-items: center;
+  height: 100%;
+}
+
+.home .slider-container .slide-container .parent-excerpt,
+.home .slider-container .slide-container .variation-description {
+  margin-top: 0.5rem;
+}
+
+.home .slider-container .slide-container .actions {
+  margin-top: 2rem;
 }

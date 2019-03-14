@@ -2,9 +2,9 @@
   $variations = $larula_args -> variations;
   $slides_count = count($variations);
 ?>
-<div class="product-slider-section slider-container" data-slides="<?php echo $slides_count;?>">
+<div class="row product-slider-section slider-container" data-slides="<?php echo $slides_count;?>">
   <?php $i = 0;?>
-  <ul class="slides">
+  <ul class="slides col-12">
     <?php foreach($variations as $variation) :?>
       <?php $additionalClass = '';?>
       <?php if($i == 0) :?>
@@ -14,8 +14,28 @@
       <?php elseif($i == $slides_count - 1 && $slides_count > 2) :?>
         <?php $additionalClass = ' left';?>
       <?php endif;?>
+      <?php 
+        $parent_id = $variation -> get_parent_id();
+        $parent = wc_get_product( $parent_id );
+      ?>
       <li class="slide-container<?php echo $additionalClass;?>" data-page="<?php echo ++$i; ?>">
-        <?php echo $variation -> get_image();?>
+        <div class="row">
+          <div class="thumnail-column col-6 col-md-6 col-sm-12">
+            <?php echo $variation -> get_image();?>
+          </div>
+          <div class="info-column col-6 col-md-6 col-sm-12">
+            <div class="name"><?php echo $variation -> get_name();?></div>
+            <div class="price"><?php echo 'Precio : ' . wc_price( $variation -> get_price());?></div>
+            <div class="estimated-hours"><?php echo 'Intensidad horaria : ' . $variation -> estimated_hours;?></div>
+            <div class="maximun-seats"><?php echo 'cupos : ' . $variation -> get_stock_quantity() . '/' . $variation -> maximun_seats;?></div>
+            <div class="parent-excerpt"><?php echo $parent -> get_short_description();?></div>
+            <div class="variation-description"><?php echo $variation -> get_description();?></div>
+            <div class="actions">
+              <a class="button alt" href="http://localhost/larula/talleres/#post-<?php echo $parent_id?>">Ver mas</a>
+              <?php woocommerce_template_loop_add_to_cart(); ?>
+            </div>
+          </div>
+        </div>
       </li>
     <?php endforeach; ?>
   </ul>

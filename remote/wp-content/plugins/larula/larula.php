@@ -301,12 +301,7 @@ function larula_build_home_product_slider () {
       if(!empty($next_variation)) {
         $interval = $next_variation -> milliseconds - $_variation -> milliseconds;
         
-        // error_log('Deciding to change next variation');
-        // error_log('_variation date : ' . print_r($_variation -> date,1));
-        // error_log('next_variation date : ' . print_r($next_variation -> date,1));
-
         if($interval < 0) {
-          // error_log('Keeping current variation');
           continue;
         }
       }
@@ -320,7 +315,8 @@ function larula_build_home_product_slider () {
     array_push($wp_query -> query_vars['larula_args'] -> variations, $next_variation);
   }
 
-  ob_start ();
+  error_log(print_r($wp_query -> query_vars['larula_args'] -> variations,1));
+  ob_start();
 	$template_url = larula_load_template('product-slider.php', 'home');
 	load_template($template_url, true);
   $body_html = ob_get_clean();
