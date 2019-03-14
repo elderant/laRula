@@ -1,0 +1,40 @@
+{
+  "editor.tabSize": 2,
+  "deploy.reloaded": {
+		"packages": [
+			{
+				"name": "larula Webpage",
+				"description": "The plugin folder",
+
+				"files": [
+					"**/*.php",
+					"**/*.css",
+					"**/*.js",
+					"**/*.log"
+				],
+				"exclude": [
+					// "**/!(wp-config).php",
+					// "**/!(debug).log",
+					// "wp-content/plugins/!(floripondia)/**/*.php",
+					// "wp-content/plugins/!(floripondia)/**/*.css",
+					// "wp-content/plugins/!(floripondia)/**/*.js",
+				],
+				"deployOnSave": [ "larulaWebpage" ],
+				"syncWhenOpen": "larulaWebpage",
+			}
+		],
+
+		"targets": [
+			{
+				"type": "ftp",
+				"name": "larulaWebpage",
+				"description": "wordpress folder",
+				"host": "ftp.larulataller.com", 
+				"port": 21,
+				"user": "sebastian@larulataller.com", 
+				"password": "tt*47nUaBpWN",
+				"dir": "/public_html/"
+			}
+		]
+	},
+}
