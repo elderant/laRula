@@ -279,24 +279,29 @@ function larula_build_featured_course_banner () {
     $index++;
   }
 
+  // Store featured product in cache to avoid it in the slider
   if(FALSE === wp_cache_get( 'featured_event' )) {
 		wp_cache_add( 'featured_event', array() );
 	}
 	else {
 		wp_cache_set( 'featured_event', array() );
   }
-  $variation = wc_get_product( $recent_products -> posts[$best]->ID );
+  $variation = wc_get_product( $recent_products -> posts[$best] -> ID );
   $parent_id = $variation -> get_parent_id();
   wp_cache_set( 'featured_event', array($parent_id) );
 
-  $recent_products -> posts[$best] -> date = $lowest_date;
-  $recent_products -> posts[$best] -> until_event = (new DateTime()) -> diff($lowest_date);
-  $recent_products -> posts[$best] -> milliseconds = $lowest_date -> getTimestamp() - (new DateTime()) -> getTimestamp();
-  $recent_products -> posts[$best] -> maximun_seats = get_post_meta($recent_products -> posts[$best]-> ID, '_maximun_seats', true );
-  $recent_products -> posts[$best] -> estimated_hours = get_post_meta($recent_products -> posts[$best]-> ID, '_estimated_hours', true );
+  // $variation and $parent will be used in the template
+  $parent = wc_get_product( $parent_id );
+
+  $variation -> date = $lowest_date;
+  $variation -> until_event = (new DateTime()) -> diff($lowest_date);
+  $variation -> milliseconds = $lowest_date -> getTimestamp() - (new DateTime()) -> getTimestamp();
+  $variation -> maximun_seats = get_post_meta($recent_products -> posts[$best]-> ID, '_maximun_seats', true );
+  $variation -> estimated_hours = get_post_meta($recent_products -> posts[$best]-> ID, '_estimated_hours', true );
 
   $wp_query -> query_vars['larula_args'] = (object)[];
-  $wp_query -> query_vars['larula_args'] -> product = $recent_products -> posts[$best];
+  $wp_query -> query_vars['larula_args'] -> variation = $variation;
+  $wp_query -> query_vars['larula_args'] -> parent_product = $parent;
 
   ob_start ();
 	$template_url = larula_load_template('featured-banner.php', 'home');
@@ -321,7 +326,6 @@ function larula_build_home_product_slider () {
   );
   $product_query = new WP_Query( $query_args );
 
-  // error_log('query vars : ' . print_r($wp_query -> query_vars,1));
   $wp_query -> query_vars['larula_args'] -> variations = array();
   foreach($product_query -> posts as $id) {
     $_product = wc_get_product($id); 
@@ -367,7 +371,6 @@ function larula_build_home_product_slider () {
     array_push($wp_query -> query_vars['larula_args'] -> variations, $next_variation);
   }
 
-  error_log(print_r($wp_query -> query_vars['larula_args'] -> variations,1));
   ob_start();
 	$template_url = larula_load_template('product-slider.php', 'home');
 	load_template($template_url, true);

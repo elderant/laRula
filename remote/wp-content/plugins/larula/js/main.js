@@ -178,14 +178,16 @@
         $currentSlide.toggleClass('right');
         $currentSlide.toggleClass('active');
 
-        $sliderContainer.find('.slides li[data-page="' + 
-          String(currentSlideNumber - 2) + '"]').toggleClass('left');
-        if(currentSlideNumber == 1) {
-          $sliderContainer.find('.slides li[data-page="' + String(slideCount - 1) + '"]').toggleClass('left');
-        }
-        if(currentSlideNumber == 2) {
-          $sliderContainer.find('.slides li[data-page="' + String(slideCount) + '"]').toggleClass('left');
-        }
+        setTimeout(function(){
+          $sliderContainer.find('.slides li[data-page="' + 
+            String(currentSlideNumber - 2) + '"]').toggleClass('left');
+          if(currentSlideNumber == 1) {
+            $sliderContainer.find('.slides li[data-page="' + String(slideCount - 1) + '"]').toggleClass('left');
+          }
+          if(currentSlideNumber == 2) {
+            $sliderContainer.find('.slides li[data-page="' + String(slideCount) + '"]').toggleClass('left');
+          }
+        }, 20);
       }
       else {
         $sliderContainer.find('.slides li.left').toggleClass('left');
@@ -201,14 +203,16 @@
         $currentSlide.toggleClass('left');
         $currentSlide.toggleClass('active');
 
-        $sliderContainer.find('.slides li[data-page="' + 
-          String(currentSlideNumber + 2) + '"]').toggleClass('right');
-        if(currentSlideNumber == slideCount) {
-          $sliderContainer.find('.slides li[data-page="' + 2 + '"]').toggleClass('right');
-        }
-        if(currentSlideNumber + 1 == slideCount) {
-          $sliderContainer.find('.slides li[data-page="' + 1 + '"]').toggleClass('right');
-        }
+        setTimeout(function(){
+          $sliderContainer.find('.slides li[data-page="' + 
+            String(currentSlideNumber + 2) + '"]').toggleClass('right');
+          if(currentSlideNumber == slideCount) {
+            $sliderContainer.find('.slides li[data-page="' + 2 + '"]').toggleClass('right');
+          }
+          if(currentSlideNumber + 1 == slideCount) {
+            $sliderContainer.find('.slides li[data-page="' + 1 + '"]').toggleClass('right');
+          }
+        }, 20);
       }
     }
   }

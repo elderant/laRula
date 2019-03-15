@@ -32,7 +32,16 @@
             <div class="variation-description"><?php echo $variation -> get_description();?></div>
             <div class="actions">
               <a class="button alt" href="http://localhost/larula/talleres/#post-<?php echo $parent_id?>">Ver mas</a>
-              <?php woocommerce_template_loop_add_to_cart(); ?>
+              <a class="button alt" href="http://localhost/larula/cart/?<?php 
+                $url = 'add-to-cart=' . $parent_id . '&variation_id=' . $variation -> get_id();
+                $attribures = $variation -> get_attributes();
+                foreach ($attribures as $key => $value) {
+                  $value = utf8_uri_encode( $value );
+                  $value = str_replace('/', '%2F', $value);
+                  $url .= '&attribute_pa_' . $key . '=' . $value;
+                }
+                echo $url;
+              ?>"><?php _e('Comprar', 'larula');?></a>
             </div>
           </div>
         </div>
