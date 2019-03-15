@@ -160,31 +160,83 @@ add_action( 'woocommerce_product_after_variable_attributes', 'larula_taller_sett
 */
 function larula_save_variation_settings_fields( $post_id ) {
 	// Intensidad horaria
-	$estimated_hours = $_POST['_estimated_hours'][ $post_id ];
+	$estimated_hours = $_POST['_estimated_hours'][ $variation_id ];
 	if( ! empty( $estimated_hours ) ) {
-		update_post_meta( $post_id, '_estimated_hours', esc_attr( $estimated_hours ) );
+		update_post_meta( $variation_id, '_estimated_hours', esc_attr( $estimated_hours ) );
   }
-  
+  else {
+    delete_post_meta( $variation_id, '_estimated_hours' );
+  }
+
   // Maximo participantes
-	$maximun_seats = $_POST['_maximun_seats'][ $post_id ];
+	$maximun_seats = $_POST['_maximun_seats'][ $variation_id ];
 	if( ! empty( $maximun_seats ) ) {
-		update_post_meta( $post_id, '_maximun_seats', esc_attr( $maximun_seats ) );
+		update_post_meta( $variation_id, '_maximun_seats', esc_attr( $maximun_seats ) );
+  }
+  else {
+    delete_post_meta( $variation_id, '_maximun_seats' );
   }
   
   // Fecha del evento
-	$taller_start_date = $_POST['_taller_start_date'][ $post_id ];
+	$taller_start_date = $_POST['_taller_start_date'][ $variation_id ];
 	if( ! empty( $taller_start_date ) ) {
-		update_post_meta( $post_id, '_taller_start_date', esc_attr( $taller_start_date ) );
+		update_post_meta( $variation_id, '_taller_start_date', esc_attr( $taller_start_date ) );
+  }
+  else {
+    delete_post_meta( $variation_id, '_taller_start_date' );
   }
   
   // Hora del evento
-	$taller_start_hour = $_POST['_taller_start_hour'][ $post_id ];
+	$taller_start_hour = $_POST['_taller_start_hour'][ $variation_id ];
 	if( ! empty( $taller_start_hour ) ) {
-		update_post_meta( $post_id, '_taller_start_hour', esc_attr( $taller_start_hour ) );
-	}
+		update_post_meta( $variation_id, '_taller_start_hour', esc_attr( $taller_start_hour ) );
+  }
+  else {
+    delete_post_meta( $variation_id, '_taller_start_hour' );
+  }
 }
 // Save Variation Settings
 add_action( 'woocommerce_save_product_variation', 'larula_save_variation_settings_fields', 10, 1 );
+
+/**
+ * MODIFY to include the custom variation fields of the parent product as a alternative 
+ * if the variation field is empty.
+ */
+function larula_add_custom_field_variation_data( $variations ) {
+  // Intensidad horaria
+  $variations['_estimated_hours'] = '<span class="woocommerce_estimated_hours"><span class="label">' . __('Intensidad horaria :','larula') . '</span>' .
+    '<span>' . get_post_meta( $variations[ 'variation_id' ], '_estimated_hours', true ) . '</span></span>';
+  
+  // Maximo participantes
+  $variations['_seats'] = '<span class="woocommerce_maximun_seats"><span class="label">' . __('Cupos :','larula') . '</span>' .
+    '<span class="current_inventory">' . $variations[ 'max_qty' ] . '</span>' .   
+    '<span class="separator">/</span>' .
+    '<span class="max_inventory">' . get_post_meta( $variations[ 'variation_id' ], '_maximun_seats', true ) . '</span>' . 
+    '</span>';
+
+  // Fecha inicio del evento
+  $date = get_post_meta( $variations[ 'variation_id' ], '_taller_start_date', true );
+  if(!empty ($date)) {
+    $date_object = DateTime::createFromFormat('Y-m-d', $date);
+    $variations['_taller_start_date'] = '<span class="woocommerce_taller_start_date_time"><span class="label">' . __('Fecha :','larula') . '</span>' .
+      '<span class="date">' . $date_object -> format('d/m/Y') . '</span>' .
+      '<span class="time">' . get_post_meta( $variations[ 'variation_id' ], '_taller_start_hour', true ) . '</span></span>';
+  }
+  else {
+    $variations['_taller_start_date'] = '<span class="woocommerce_taller_start_date_time hidden"></span>';
+  }
+  
+  // Modifications woocommerce defaults
+  if(!empty($variations['price_html'])) {
+    $variations['price_html'] = '<span class="woocommerce_price_html"><span class="price-label">' . __('Precio :','larula') . '</span>' . $variations['price_html'] . '</span>';
+  }
+  else {
+    $variations['price_html'] = '<span class="woocommerce_price_html hidden"></span>';
+  }
+
+  return $variations;
+}
+add_filter( 'woocommerce_available_variation', 'larula_add_custom_field_variation_data' );
 
 /************************************************************/
 /************************ Home functions ********************/

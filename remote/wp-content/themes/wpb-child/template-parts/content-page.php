@@ -37,7 +37,7 @@
 			<a class="instagram" href="https://www.instagram.com/la_rula_taller/"><i class="fab fa-instagram"></i></a>
 		</div>
 		<div class="rainbow-strip">
-			<img src="http://localhost/larula/wp-content/uploads/page-footer-lines.jpg" alt="Color line strip">
+			<img src="http://localhost/larula/wp-content/uploads/page-footer-lines-1.png" alt="Color line strip">
 		</div>
 		<?php if ( get_edit_post_link() && !$enable_vc ) : ?>
 			<?php

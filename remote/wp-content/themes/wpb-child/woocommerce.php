@@ -18,7 +18,7 @@ get_header(); ?>
         <main id="main" class="site-main" role="main">
 
             <?php woocommerce_content(); ?>
-
+            <?php larula_get_page_footer_html(); ?>
         </main><!-- #main -->
     </section><!-- #primary -->
 

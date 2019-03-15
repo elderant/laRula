@@ -227,3 +227,51 @@
 .home .slider-container .slide-container .actions {
   margin-top: 2rem;
 }
+
+/*********** Shop *************/
+.woocommerce.archive .product .variations_form .variations {
+  margin-bottom: 1rem;
+}
+
+.woocommerce.archive .product .woocommerce-variation.single_variation {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.woocommerce.archive .product .woocommerce-variation.single_variation > div {
+  width: 50%;
+}
+
+.woocommerce.archive .product .woocommerce-variation.single_variation .woocommerce-variation-description {
+  width: 100%;
+}
+
+.woocommerce.archive ul.products li.product .single_variation .woocommerce-variation-price span {
+  display: inline-block;
+  margin: auto;
+}
+
+.woocommerce.archive .single_variation .woocommerce-variation-price span.price-label,
+.woocommerce.archive .single_variation .label {
+  padding-right: 0.5rem;
+}
+
+.woocommerce.archive .single_variation .woocommerce_maximun_seats .separator {
+  padding: 0 0.5rem;
+}
+
+.woocommerce.archive .single_variation .woocommerce-variation-time .date {
+  padding-right: 0.5rem;
+}
+
+.woocommerce.archive .product .woocommerce-variation-add-to-cart .quantity {
+  display: inline-block;
+  padding-right: 1rem;
+}
+
+.woocommerce.archive .product .woocommerce-variation-add-to-cart .single_add_to_cart_button {
+  display: inline-block;
+  margin: auto;
+}

@@ -174,24 +174,33 @@ a.button:hover {
 	padding: 0;
 }
 
-.page  > .entry-footer {
+.page  > .entry-footer,
+.woocommerce .site-main > .entry-footer {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.page > .entry-footer .rainbow-strip {
+.woocommerce .site-main > .entry-footer {
+	width: 100%;
+}
+
+.page > .entry-footer .rainbow-strip,
+.woocommerce .site-main > .entry-footer .rainbow-strip {
 	margin: 0 -15px;
 	text-align: center;
 }
 
 .page > .entry-footer .social-links,
-.page > .entry-footer .rainbow-strip {
+.page > .entry-footer .rainbow-strip,
+.woocommerce .site-main > .entry-footer  .social-links,
+.woocommerce .site-main > .entry-footer .rainbow-strip {
 	margin-bottom: 1rem;
 }
 
-.page > .entry-footer .social-links a {
+.page > .entry-footer .social-links a,
+.woocommerce .site-main > .entry-footer a {
 	display: inline-block;
 	width: 1.5em;
 	height: 1.5em;
@@ -203,15 +212,18 @@ a.button:hover {
 	transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out;
 }
 
-.page > .entry-footer .social-links a:hover {
+.page > .entry-footer .social-links a:hover,
+.woocommerce .site-main > .entry-footer .social-links a:hover {
 	background-color: var(--black);
 }
 
-.page > .entry-footer .social-links a.facebook:hover {
+.page > .entry-footer .social-links a.facebook:hover,
+.woocommerce .site-main > .entry-footer .social-links a.facebook:hover {
 	color: var(--blue);
 }
 
-.page > .entry-footer .social-links a.instagram:hover {
+.page > .entry-footer .social-links a.instagram:hover,
+.woocommerce .site-main > .entry-footer .social-links a.instagram:hover {
 	color: var(--pink);
 }
 
@@ -249,6 +261,21 @@ a.button:hover {
 .woocommerce button.button.alt:hover {
 	background-color: var(--red);
 	color: var(--black);
+}
+
+.woocommerce a.button.alt.disabled,
+.woocommerce input.button.alt.disabled,
+.woocommerce button.button.alt.disabled {
+	background-color: var(--red);
+	pointer-events: none;
+}
+
+.woocommerce a.button.disabled,
+.woocommerce input.button.disabled,
+.woocommerce button.button.disabled {
+	background-color: var(--white);
+	color: var(--black);
+	pointer-events: none;
 }
 
 /* Messages */
@@ -438,6 +465,11 @@ a.button:hover {
 	color: var(--white);
 }
 
+.woocommerce ul.products li.product .single_variation .price {
+	font-size: inherit;
+	color: var(--white);
+}
+
 /****************** Shop single ********************/
 
 .single-product .site-main .product-title {
@@ -461,7 +493,7 @@ a.button:hover {
 }
 
 .single-product .product button.single_add_to_cart_button {
-	background-color: var(--red);
+	/* background-color: var(--red); */
 }
 
 .woocommerce.single-product .product .woocommerce-tabs .description_tab.active {
