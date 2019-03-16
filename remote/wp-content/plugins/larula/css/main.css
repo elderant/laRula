@@ -1,3 +1,4 @@
+/* Home banner */
 .home .main-banner-section {
   position: relative;
   margin-bottom: 1rem;
@@ -46,6 +47,10 @@
 
 .home .main-banner-section .additional-info div:last-child {
   margin-bottom: 0;
+}
+
+.home .main-banner-section .additional-info div .label {
+  margin-right: 0.5rem;
 }
 
 .home .main-banner-section .additional-info .name {
@@ -227,6 +232,10 @@
 .home .slider-container .slide-container .parent-excerpt,
 .home .slider-container .slide-container .variation-description {
   margin-top: 0.5rem;
+}
+
+.home .slide-container .info-column > div .label {
+  margin-right: 0.5rem;
 }
 
 .home .slider-container .slide-container .actions {

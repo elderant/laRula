@@ -1,5 +1,5 @@
 /* 
-Theme Name:		 bs-child
+Theme Name:		 wpb-child
 Theme URI:		 http://childtheme-generator.com/
 Description:	 bs-child is a child theme of WP Bootstrap Starter, created by ChildTheme-Generator.com
 Author:			 Juan Sebastian Guerrero
@@ -162,20 +162,24 @@ a.button:hover {
 	margin: 0;
 }
 
-.page-template-fullwidth .site-main .page-header {
+.page-template-fullwidth .site-main .page-header,
+.blog .site-main .page-header,
+.single-post .site-main .page-header {
 	background-color: var(--red);
 	margin: 0 -15px 2rem;
 	padding: 1rem 0;
 	text-align: center;
 }
 
-.page-template-fullwidth .site-main .page-header h2 {
+.page-template-fullwidth .site-main .page-header h2,
+.blog .site-main .page-header h1 {
 	margin: 0;
 	padding: 0;
 }
 
 .page  > .entry-footer,
-.woocommerce .site-main > .entry-footer {
+.woocommerce .site-main > .entry-footer,
+.blog .site-content #primary ~ .entry-footer {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -194,13 +198,16 @@ a.button:hover {
 
 .page > .entry-footer .social-links,
 .page > .entry-footer .rainbow-strip,
-.woocommerce .site-main > .entry-footer  .social-links,
-.woocommerce .site-main > .entry-footer .rainbow-strip {
+.woocommerce .site-main > .entry-footer .social-links,
+.woocommerce .site-main > .entry-footer .rainbow-strip,
+.blog .site-content #primary ~ .entry-footer .social-links,
+.blog .site-content #primary ~ .entry-footer .rainbow-strip {
 	margin-bottom: 1rem;
 }
 
 .page > .entry-footer .social-links a,
-.woocommerce .site-main > .entry-footer a {
+.woocommerce .site-main > .entry-footer a,
+.blog .site-content #primary ~ .entry-footer a {
 	display: inline-block;
 	width: 1.5em;
 	height: 1.5em;
@@ -213,17 +220,20 @@ a.button:hover {
 }
 
 .page > .entry-footer .social-links a:hover,
-.woocommerce .site-main > .entry-footer .social-links a:hover {
+.woocommerce .site-main > .entry-footer .social-links a:hover,
+.blog .site-content #primary ~ .entry-footer a:hover {
 	background-color: var(--black);
 }
 
 .page > .entry-footer .social-links a.facebook:hover,
-.woocommerce .site-main > .entry-footer .social-links a.facebook:hover {
+.woocommerce .site-main > .entry-footer .social-links a.facebook:hover,
+.blog .site-content #primary ~ .entry-footer .social-links a.facebook:hover {
 	color: var(--blue);
 }
 
 .page > .entry-footer .social-links a.instagram:hover,
-.woocommerce .site-main > .entry-footer .social-links a.instagram:hover {
+.woocommerce .site-main > .entry-footer .social-links a.instagram:hover,
+.blog .site-content #primary ~ .entry-footer .social-links a.instagram:hover {
 	color: var(--pink);
 }
 
@@ -592,4 +602,30 @@ a.button:hover {
 .page-id-71 .page .contact-social-networks i {
 	padding-left: 0.25rem;
 	padding-right: 0.25rem;
+}
+
+/****************** Blog ********************/
+.blog .site-content #secondary {
+	display: none;
+}
+
+/****************** Blog ********************/
+.single-post .site-content #secondary {
+	display: none;
+}
+
+.single-post .site-main .post .row {
+	margin: 1rem;
+}
+
+.single-post .post .post-thumbnail {
+	width: 100%;
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+.single-post .post .post-thumbnail img {
+	max-height: 600px;
+	width: auto;
+
 }

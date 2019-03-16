@@ -12,9 +12,9 @@
     <div class="additional-info overlay hidden">
       <div class="additional-info-container">
         <div class="name"><?php echo $variation -> get_name();?></div>
-        <div class="price"><?php echo 'precio : ' . wc_price( $variation->get_price() );?></div>
-        <div class="estimated-hours"><?php echo 'Intensidad horaria : ' . $variation -> estimated_hours;?></div>
-        <div class="maximun-seats"><?php echo 'cupos : ' . $variation -> get_stock_quantity() . '/' . $variation -> maximun_seats . '<span style="color:red; padding-left:0.5rem; font-weight:bold;">SE DEBEN MOSTRAR LAS QUE NO TENGAN CUPOS?</span>';?></div>
+        <div class="price"><?php echo '<span class="label">' . __('Precio :','larula') . '</span><span class="price value">' . wc_price( $variation->get_price() ) . '</span>';?></div>
+        <div class="estimated-hours"><?php echo '<span class="label">' . __('Intensidad horaria :', 'larula') . '</span><span class="hours value">' . $variation -> estimated_hours . '</span>';?></div>
+        <div class="maximun-seats"><?php echo '<span class="label">' . __('Cupos :', 'larula') . '</span><span class="seats value">' . $variation -> get_stock_quantity() . '/' . $variation -> maximun_seats . '</span>' . '<span style="color:red; padding-left:0.5rem; font-weight:bold;">SE DEBEN MOSTRAR LAS QUE NO TENGAN CUPOS?</span>';?></div>
         <div class="variation-description"><?php echo $variation -> get_description();?></div>
         <div class="parent-excerpt"><?php echo $parent -> get_short_description();?></div>
         <div class="parent-description"><?php echo $parent -> get_description();?></div>
