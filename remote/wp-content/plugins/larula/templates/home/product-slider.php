@@ -32,7 +32,7 @@
             <div class="variation-description"><?php echo $variation -> get_description();?></div>
             <div class="actions">
               <a class="button alt" href="http://localhost/larula/talleres/#post-<?php echo $parent_id?>">Ver mas</a>
-              <a class="button alt" href="http://localhost/larula/cart/?<?php 
+              <a class="button alt" href="http://localhost/larula/checkout/?<?php 
                 $url = 'add-to-cart=' . $parent_id . '&variation_id=' . $variation -> get_id();
                 $attribures = $variation -> get_attributes();
                 foreach ($attribures as $key => $value) {

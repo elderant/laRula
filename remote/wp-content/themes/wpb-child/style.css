@@ -510,7 +510,7 @@ a.button:hover {
 	background-color: var(--red);
 }
 
-/****************** Checkout ********************/
+/****************** Cart/Checkout ********************/
 .woocommerce form.checkout_coupon {
 	border-color: var(--dark);
 }
@@ -519,7 +519,8 @@ a.button:hover {
 	width: 100%
 }
 
-.woocommerce-page .checkout {
+.woocommerce-page .checkout,
+.woocommerce-page .woocommerce-cart-form {
 	margin-bottom: 2rem;
 }
 

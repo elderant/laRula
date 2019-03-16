@@ -20,7 +20,7 @@
         <div class="parent-description"><?php echo $parent -> get_description();?></div>
         <div class="actions">
           <a class="button alt" href="http://localhost/larula/talleres/#post-<?php echo $parent -> get_id()?>"><?php _e('Ver mas', 'larula');?></a>
-          <a class="button alt" href="http://localhost/larula/cart/?<?php 
+          <a class="button alt" href="http://localhost/larula/checkout/?<?php 
             $url = 'add-to-cart=' . $parent -> get_id() . '&variation_id=' . $variation -> get_id();
             $attribures = $variation -> get_attributes();
             foreach ($attribures as $key => $value) {

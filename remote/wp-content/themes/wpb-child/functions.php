@@ -82,3 +82,40 @@ function larula_wc_show_product_category() {
 function larula_get_page_footer_html() {
 	get_template_part('template-parts/footer', 'page');
 }
+
+/******************** Cart/Checkout ********************/
+
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+
+function larula_cart_on_checkout_page_only() { 
+	if ( is_wc_endpoint_url( 'order-received' ) ) return;
+	echo do_shortcode('[woocommerce_cart]');
+}
+
+add_action( 'woocommerce_before_checkout_form', 'larula_cart_on_checkout_page_only', 5 );
+
+
+function larula_redirect_empty_cart_checkout_to_home() {
+	if ( is_cart() && is_checkout() && 0 == WC() -> cart -> get_cart_contents_count() && ! is_wc_endpoint_url( 'order-pay' ) && ! is_wc_endpoint_url( 'order-received' ) ) {
+		wp_safe_redirect( home_url() );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'larula_redirect_empty_cart_checkout_to_home' );
+
+function larula_checkout_billing_fields_customization( $address_fields ) {
+	unset($address_fields['billing_company']);
+	unset($address_fields['billing_country']);
+	$address_fields['billing_country']['required'] = false;
+	unset($address_fields['billing_address_1']);
+	$address_fields['billing_address_1']['required'] = false;
+	unset($address_fields['billing_address_2']);
+	unset($address_fields['billing_city']);
+	$address_fields['billing_city']['required'] = false;
+	unset($address_fields['billing_state']);
+	$address_fields['billing_state']['required'] = false;
+	unset($address_fields['billing_postcode']);
+
+	return $address_fields;
+}
+add_filter( 'woocommerce_billing_fields', 'larula_checkout_billing_fields_customization', 10, 1 );
