@@ -15,8 +15,14 @@
         <?php $additionalClass = ' left';?>
       <?php endif;?>
       <?php 
-        $parent_id = $variation -> get_parent_id();
-        $parent = wc_get_product( $parent_id );
+        if(strcasecmp($variation -> get_type(), 'variation') == 0 ) {
+          $parent_id = $variation -> get_parent_id();
+          $parent = wc_get_product( $parent_id );
+        }
+        else {
+          $parent_id = $variation -> get_id();
+          $parent = $variation;
+        }
       ?>
       <li class="slide-container<?php echo $additionalClass;?>" data-page="<?php echo ++$i; ?>">
         <div class="row">

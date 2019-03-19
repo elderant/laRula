@@ -19,8 +19,6 @@ add_action( 'woocommerce_shop_loop_item_title', 'larula_wc_template_loop_product
 
 add_action( 'woocommerce_after_shop_loop_item_title', 'larula_wc_template_loop_product_excerpt', 15 );
 
- 
-
 remove_action( 'woocommerce_after_shop_loop_item', 'larula_wc_template_loop_product_column_close', 5 );
 remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
 add_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_single_add_to_cart', 11 );
@@ -58,6 +56,15 @@ function larula_wc_template_loop_product_excerpt() {
 	}
 }
 
+function larula_wc_change_cart_form_action($permalink) {
+	global $wp;
+
+	if(strcasecmp($wp->request, 'talleres') == 0 ) {
+		return get_permalink( wc_get_page_id( 'shop' ) );
+	}
+	return $permalink;
+}
+add_filter( 'woocommerce_add_to_cart_form_action', 'larula_wc_change_cart_form_action', 10, 1 );
 
 
 /******************** Reorder single page product display ********************/
@@ -105,15 +112,15 @@ add_action( 'template_redirect', 'larula_redirect_empty_cart_checkout_to_home' )
 
 function larula_checkout_billing_fields_customization( $address_fields ) {
 	unset($address_fields['billing_company']);
-	unset($address_fields['billing_country']);
 	$address_fields['billing_country']['required'] = false;
-	unset($address_fields['billing_address_1']);
+	unset($address_fields['billing_country']);
 	$address_fields['billing_address_1']['required'] = false;
+	unset($address_fields['billing_address_1']);
 	unset($address_fields['billing_address_2']);
-	unset($address_fields['billing_city']);
 	$address_fields['billing_city']['required'] = false;
-	unset($address_fields['billing_state']);
+	unset($address_fields['billing_city']);
 	$address_fields['billing_state']['required'] = false;
+	unset($address_fields['billing_state']);
 	unset($address_fields['billing_postcode']);
 
 	return $address_fields;

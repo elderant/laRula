@@ -59,6 +59,13 @@
   font-weight: bold;
 }
 
+.home .main-banner-section .additional-info .variation-description,
+.home .main-banner-section .additional-info .parent-excerpt,
+.home .main-banner-section .additional-info .parent-description {
+  max-height: 5em;
+  overflow: hidden;
+}
+
 .home .main-banner-section .additional-info .actions .button {
   margin: 0 1rem;
 }
@@ -238,6 +245,11 @@
   margin-right: 0.5rem;
 }
 
+.home .slide-container .info-column .variation-description {
+  max-height: 6.75em;
+  overflow: hidden;
+}
+
 .home .slider-container .slide-container .actions {
   margin-top: 2rem;
 }
@@ -245,6 +257,26 @@
 /*********** Shop *************/
 .woocommerce.archive .product .variations_form .variations {
   margin-bottom: 1rem;
+}
+
+.woocommerce.archive .product form.cart .quantity {
+  display: inline-block;
+  padding-right: 1rem;
+}
+
+.woocommerce.archive .product form.cart .single_add_to_cart_button {
+  display: inline-block;
+  margin: auto;
+}
+
+.woocommerce.archive .product-type-simple .custom-information {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.woocommerce.archive .product-type-simple .custom-information > div {
+  width: 50%;
 }
 
 .woocommerce.archive .product .woocommerce-variation.single_variation {
