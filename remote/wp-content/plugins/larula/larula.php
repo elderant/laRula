@@ -416,6 +416,12 @@ add_action( 'woocommerce_save_product_variation', 'larula_save_variation_setting
 
 function larula_add_custom_field_variation_data( $variations ) {
   $_variation = wc_get_product($variations[ 'variation_id' ]);
+
+  if(empty($variations['price_html'])) {
+    $price = $_variation -> get_price();
+    $variations['price_html'] = '<span class="price">' . wc_price($price) . '</span>';
+  }
+
   // Intensidad horaria
   $variations['_estimated_hours'] = '<span class="woocommerce_estimated_hours"><span class="label">' . __('Intensidad horaria :','larula') . '</span>' .
     '<span>' . larula_get_product_estimated_hours($_variation) . '</span></span>';
@@ -778,7 +784,9 @@ function larula_build_home_product_slider () {
       $next_variation = $_variation;
     }
 
-    array_push($wp_query -> query_vars['larula_args'] -> variations, $next_variation);
+    if(!empty($next_variation)) {
+      array_push($wp_query -> query_vars['larula_args'] -> variations, $next_variation);
+    }
   }
 
   ob_start();

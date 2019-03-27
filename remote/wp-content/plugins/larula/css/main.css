@@ -2,15 +2,19 @@
 .home .main-banner-section {
   position: relative;
   margin-bottom: 1rem;
-  padding: 0.5rem;
+  padding: 0;
+  color: var(--white);
 }
 
 .home .main-banner-section .banner {
   position: relative;
+  min-height: 32em;
   text-align: center;
 }
 
 .home .main-banner-section .banner img {
+  min-height: inherit;
+  width: auto;
   object-fit: contain;
 }
 
@@ -18,7 +22,7 @@
   position: absolute;
   top: 0;
   right: 1rem;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0,0.7);
   padding: 0.25rem 0.5rem 0.5rem;
   line-height: 1.2;
 }
@@ -37,7 +41,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 2rem;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0,0.7);
   border: 1px solid;
 }
 
@@ -62,7 +66,7 @@
 .home .main-banner-section .additional-info .variation-description,
 .home .main-banner-section .additional-info .parent-excerpt,
 .home .main-banner-section .additional-info .parent-description {
-  max-height: 5em;
+  max-height: 6em;
   overflow: hidden;
 }
 
@@ -92,6 +96,7 @@
   left: 0;
   height: 100%;
   width: 100%;
+  padding: 0 1rem;
 }
 
 .home .slider-container li.active {
@@ -123,12 +128,6 @@
   animation: failRight 0.3s forwards ease;
 }
 
-.home .slider-container li img {
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-}
-
 .home .slider-container .direction-container {
   position: absolute;
   top: 50%;
@@ -136,11 +135,11 @@
 }
 
 .home .slider-container .direction-container.left {
-  left: 5%;
+  left: 0;
 }
 
 .home .slider-container .direction-container.right {
-  right: 5%;
+  right: 0;
 }
 
 @-webkit-keyframes failLeft {
@@ -176,19 +175,19 @@
 .home .slider-container .direction-button {
   border: none;
   border-radius: 50%;
-  background-color: var(--white);
+  background-color: var(--green-faded);
   transition: all 0.5s ease;
   cursor: pointer;
 }
 
 .home .slider-container .direction-button i {
   padding: 7px;
-  color: var(--black);
+  color: var(--red);
   transition: all 0.5s ease;
 }
 
 .home .slider-container .direction-button:hover i {
-  color: var(--red);
+  color: var(--black);
 }
 
 .home .slider-container .direction-button:active,
@@ -214,12 +213,12 @@
   border: none;
   border-radius: 50%;
   padding: 0;
-  background-color: var(--white);
+  background-color: var(--green-faded);
   cursor: pointer;
 }
 
 .home .slider-container .slider-paging .page-button.active {
-  background-color: var(--blue);
+  background-color: var(--red);
   pointer-events: none;
   cursor: default;
 }
@@ -255,6 +254,14 @@
 }
 
 /*********** Shop *************/
+/* .home .slider-container */
+
+/* .home .slider-container li img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+} */
+
 .woocommerce.archive .product .variations_form .variations {
   margin-bottom: 1rem;
 }

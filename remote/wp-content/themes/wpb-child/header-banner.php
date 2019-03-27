@@ -32,9 +32,6 @@
 						<a href="<?php echo esc_url( home_url( '/' )); ?>" class="logo-link">
 							<img src="<?php echo esc_attr(get_theme_mod( 'wp_bootstrap_starter_logo' )); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
 						</a>
-						<a href="<?php echo esc_url( home_url( '/' )); ?>" class="slogan-link">
-							<div class="site-description"><?php echo get_bloginfo( 'description' );?></div>
-						</a>
 					<?php else : ?>
 						<a class="site-title" href="<?php echo esc_url( home_url( '/' )); ?>"><?php esc_url(bloginfo('name')); ?></a>
 					<?php endif; ?>
@@ -57,6 +54,14 @@
 				));
 				?>
 			</nav>
+		</div>
+		<div class="page-banner">
+			<div class="banner-image">
+				<?php echo get_the_post_thumbnail( get_the_ID(), 'large'); ?>
+			</div>
+			<div class="banner-content">
+				<?php echo get_post_meta( get_the_ID(), 'banner-content', true ); ?>
+			</div>
 		</div>
 	</header><!-- #masthead -->
     <?php if(is_front_page() && !get_theme_mod( 'header_banner_visibility' )): ?>

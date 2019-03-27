@@ -2,7 +2,7 @@
   $product = $larula_args -> product;
   $parent = $larula_args -> parent_product;
 ?>
-<div class="main-banner-section">
+<div class="main-banner-section col-12">
     <div class="banner">
       <?php echo $product -> get_image(); ?>
       <span class="countdown" milliseconds="<? echo $product -> milliseconds;?>"> 

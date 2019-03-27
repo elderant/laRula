@@ -53,6 +53,6 @@ get_header(); ?>
 	</section><!-- #primary -->
 
 <?php
-larula_get_page_footer_html();
+// larula_get_page_footer_html();
 get_sidebar();
 get_footer();
