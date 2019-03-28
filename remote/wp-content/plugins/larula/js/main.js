@@ -179,14 +179,20 @@
         $currentSlide.toggleClass('active');
 
         setTimeout(function(){
-          $sliderContainer.find('.slides li[data-page="' + 
-            String(currentSlideNumber - 2) + '"]').toggleClass('left');
           if(currentSlideNumber == 1) {
-            $sliderContainer.find('.slides li[data-page="' + String(slideCount - 1) + '"]').toggleClass('left');
+            $leftSlide = $sliderContainer.find('.slides li[data-page="' + String(slideCount - 1) + '"]');
           }
-          if(currentSlideNumber == 2) {
-            $sliderContainer.find('.slides li[data-page="' + String(slideCount) + '"]').toggleClass('left');
+          else if(currentSlideNumber == 2) {
+            $leftSlide = $sliderContainer.find('.slides li[data-page="' + String(slideCount) + '"]');
           }
+          else {
+            $leftSlide = $sliderContainer.find('.slides li[data-page="' + String(currentSlideNumber - 2) + '"]');
+          }
+          $leftSlide.css('display', 'none');
+          $leftSlide.toggleClass('left');
+          $leftSlide.fadeIn(1000, function(){
+            $(this).css('display', '');
+          });
         }, 20);
       }
       else {
@@ -204,14 +210,20 @@
         $currentSlide.toggleClass('active');
 
         setTimeout(function(){
-          $sliderContainer.find('.slides li[data-page="' + 
-            String(currentSlideNumber + 2) + '"]').toggleClass('right');
           if(currentSlideNumber == slideCount) {
-            $sliderContainer.find('.slides li[data-page="' + 2 + '"]').toggleClass('right');
+            $rightSlide = $sliderContainer.find('.slides li[data-page="' + 2 + '"]');
           }
-          if(currentSlideNumber + 1 == slideCount) {
-            $sliderContainer.find('.slides li[data-page="' + 1 + '"]').toggleClass('right');
+          else if(currentSlideNumber + 1 == slideCount) {
+            $rightSlide = $sliderContainer.find('.slides li[data-page="' + 1 + '"]');
           }
+          else {
+            $rightSlide = $sliderContainer.find('.slides li[data-page="' + String(currentSlideNumber + 2) + '"]')
+          }
+          $rightSlide.css('display', 'none');
+          $rightSlide.toggleClass('right');
+          $rightSlide.fadeIn(1000, function(){
+            $(this).css('display', '');
+          });
         }, 20);
       }
     }

@@ -49,6 +49,10 @@ a:hover {
 	color: var(--red-dark-tone);
 }
 
+a:focus {
+	outline: none;
+}
+
 .bg-light {
 	background-color: var(--green-faded) !important;
 }
@@ -61,13 +65,11 @@ header#masthead {
 }
 
 .navbar {
-	/* flex-direction: column; */
 	color: var(--black);
 }
 
 .navbar:hover,
 .navbar:active {
-	/* flex-direction: column; */
 	color: var(--black);
 }
 
@@ -76,8 +78,21 @@ header#masthead {
 	text-align: center;
 }
 
+.page-template-fullwidth-banner .navbar #main-nav,
+.page-template-fullwidth .navbar #main-nav {
+	justify-content: center !important;
+}
+
 .navbar #main-nav {
 	margin-right: 10%;
+}
+
+.page-template-fullwidth-banner .navbar #main-nav #menu-main-menu {
+	margin-left: -100px;
+}
+
+.page-template-fullwidth .navbar #main-nav #menu-main-menu {
+	margin-left: -230px;
 }
 
 .navbar .navbar-brand a.logo-link {
@@ -117,7 +132,14 @@ header#masthead {
 
 body:not(.theme-preset-active) #masthead .navbar-nav > li > a,
 body:not(.theme-preset-active) #masthead .navbar-nav > li > a {
+	font-size: 1.2rem;
+	padding: 0.5rem 1rem;
 	color: var(--red);
+}
+
+.page-template-fullwidth-banner body:not(.theme-preset-active) #masthead .navbar-nav > li > a,
+.page-template-fullwidth-banner body:not(.theme-preset-active) #masthead .navbar-nav > li > a {
+	text-shadow: var(--black) 0px 1px 2px;
 }
 
 body:not(.theme-preset-active) #masthead .navbar-nav > li > a:hover {
@@ -208,7 +230,8 @@ body:not(.theme-preset-active) #masthead .navbar-nav > li.current_page_item > a 
 	color: var(--pink);
 }
 
-#footer-widget .nav > li > a:hover {
+#footer-widget .nav > li > a:hover,
+#footer-widget .nav > li > a:focus {
 	background: none;
 }
 
@@ -241,7 +264,8 @@ body {
 .page-template-fullwidth .container,
 .page-template-fullwidth-banner .container,
 .woocommerce-page .container,
-.blog .container {
+.blog .container,
+.single-post .container {
 	max-width: none;
 }
 
@@ -269,6 +293,10 @@ header#masthead .container {
 	padding: 0 15rem;
 }
 
+.single-post .site-main {
+	padding: 0 15rem;
+}
+
 .page-template-fullwidth .site-main {
 	padding: 0 15rem;
 }
@@ -286,7 +314,8 @@ body.custom-background {
 }
 
 .woocommerce-page #content.site-content,
-.blog #content {
+.blog #content,
+.single-post #content.site-content {
 	padding-top: 0;
 	padding-bottom: 4rem;
 }
@@ -391,6 +420,7 @@ a.button:hover {
 .blog .site-main .page-header,
 .single-post .site-main .page-header {
 	background-color: var(--red);
+	color: var(--white);
 	margin: 0 calc(-15px - 15rem) 2rem;
 	padding: 1rem 0;
 	text-align: center;
@@ -668,6 +698,7 @@ a.button:hover {
 	width: 1000px;
 	margin: auto;
 	background-color: var(--red);
+	color: var(--white);
 	padding: 0.5rem;
 	margin-top: 2rem;
 }
@@ -742,9 +773,14 @@ a.button:hover {
 	margin:	0;
 }
 
+.page .page-section.talleres-slider {
+	padding-top: 0;
+}
+
 /****************** Shop ********************/
 .woocommerce.archive .site-main .page-title {
 	background-color: var(--red);
+	color: var(--white);
 	margin: 0 calc(-15px - 15rem) 2rem;
 	padding: 1rem 0;
 	text-align: center;
@@ -885,7 +921,7 @@ a.button:hover {
 	display: none;
 }
 
-/****************** Blog ********************/
+/****************** Single Blog ********************/
 .single-post .site-content #secondary {
 	display: none;
 }
@@ -903,5 +939,25 @@ a.button:hover {
 .single-post .post .post-thumbnail img {
 	max-height: 600px;
 	width: auto;
+}
 
+.single-post .nav-links a {
+	border-color: var(--red);
+	transition: color	0.5s ease-in-out, border-color 0.5s ease-in-out;
+}
+
+.single-post .nav-links a:hover,
+.single-post .nav-links a:focus {
+	color: var(--red-dark-tone);
+	border-color: var(--red-dark-tone);
+	background-color: transparent;
+}
+
+.single-post .post .taller-link-container {
+	margin-top: 2rem;
+	text-align: center;
+}
+
+.single-post .post .taller-link {
+	font-size: 1.25em
 }
