@@ -565,6 +565,128 @@ add_action( 'woocommerce_add_to_cart_validation', 'larula_taller_available_valid
 /************************ Home functions ********************/
 /************************************************************/
 
+function larula_get_featured_product() {
+  $tnow = new DateTime('now', new DateTimeZone("America/Bogota"));
+
+  $query_args  = array(
+    'posts_per_page' => 1,
+    'orderby' => 'modified',
+    'post_status' => 'publish',
+    'tax_query'  => array(
+      array(
+        'taxonomy' => 'product_visibility',
+        'field'    => 'name',
+        'terms'    => 'featured',
+        'operator' => 'IN'
+      )
+    )
+  );
+  $recent_products = new WP_Query( $query_args );
+
+  if(!$recent_products -> have_posts()) {
+    return;
+  }
+  $_post = $recent_products -> posts[0];
+  $_parent = wc_get_product($_post -> ID);
+
+  if($_parent -> get_type() !== 'variable') {
+    // if(!$_parent -> is_in_stock()) {
+    //   return;
+    // }
+    $_parent -> date = larula_get_product_start_date($_parent);
+    $_parent -> time = larula_get_product_start_time($_parent);
+
+    if($_parent -> date == null || $_parent -> time == null){
+      return;
+    }
+
+    if(!larula_is_product_time_available($_parent -> date, $_parent -> time)) {
+      return;
+    }
+
+    $timeString = str_replace ( '-' , ':', $_parent -> date) . ' ' . $_parent -> time . ':00';
+    $date = new DateTime($timeString, new DateTimeZone("America/Bogota"));
+    $_parent -> date = $date;
+    $_parent -> until_event = $tnow -> diff($date);
+    $_parent -> milliseconds = $date -> getTimestamp() - $tnow -> getTimestamp();
+    $_parent -> maximun_seats = larula_get_product_maximun_seats($_parent);
+    $_parent -> estimated_hours = larula_get_product_estimated_hours($_parent);
+
+    $_product = $_parent;
+    $_product -> parent_object = $_parent;
+  }
+  else {
+    $variations = $_parent -> get_available_variations();
+  
+    // Find closest variation (according to time and date fields)
+    $next_variation = array();
+    foreach($variations as $_variation_object) {
+      $_variation = wc_get_product($_variation_object['variation_id']);
+  
+      if(!$_variation -> variation_is_active()) {
+        continue;
+      }
+      // if(!$_variation -> is_in_stock()) {
+      //   continue;
+      // }
+      $_variation -> date = larula_get_product_start_date($_variation );
+      $_variation -> time = larula_get_product_start_time($_variation );
+  
+      if($_variation -> date == null || $_variation -> time == null){
+        continue;
+      }
+  
+      if(!larula_is_product_time_available($_variation -> date, $_variation -> time)) {
+        continue;
+      }
+  
+      $timeString = str_replace ( '-' , ':', $_variation -> date) . ' ' . $_variation -> time . ':00';
+      $date = new DateTime($timeString, new DateTimeZone("America/Bogota"));
+  
+      $_variation -> date = $date;
+      $_variation -> milliseconds = $date -> getTimestamp();
+      
+      if(!empty($next_variation)) {
+        $interval = $next_variation -> milliseconds - $_variation -> milliseconds;
+        
+        if($interval < 0) {
+          continue;
+        }
+      }
+  
+      $_variation -> until_event = $tnow -> diff($date);
+      $_variation -> milliseconds = $date -> getTimestamp() - $tnow -> getTimestamp();
+      $_variation -> maximun_seats = larula_get_product_maximun_seats($_variation);
+      $_variation -> estimated_hours = larula_get_product_estimated_hours($_variation);
+  
+      $next_variation = $_variation;
+    }
+
+    if(empty($next_variation)) {
+      return;
+    }
+
+    $_product = $next_variation;
+    $_product -> parent_object = $_parent;
+  }
+
+  if(FALSE === wp_cache_get( 'featured_event' )) {
+		wp_cache_add( 'featured_event', array() );
+	}
+	else {
+		wp_cache_set( 'featured_event', array() );
+  }
+  if(FALSE === wp_cache_get( 'featured_event_parent' )) {
+		wp_cache_add( 'featured_event_parent', array() );
+	}
+	else {
+		wp_cache_set( 'featured_event_parent', array() );
+	}
+  wp_cache_set( 'featured_event_parent', array($_parent -> get_id()) );
+
+  return $_product;
+}
+
 function larula_build_featured_course_banner () {
   global $wp_query;
 	$tnow = new DateTime('now', new DateTimeZone("America/Bogota"));
@@ -656,115 +778,16 @@ function larula_build_featured_course_banner () {
 	// // Decide wether to use the best product or the best variation.
 	// $best = $best_product != -1? $best_product: $best;
 
-  $query_args  = array(
-    'posts_per_page' => 1,
-    'orderby' => 'modified',
-    'post_status' => 'publish',
-    'tax_query'  => array(
-      array(
-        'taxonomy' => 'product_visibility',
-        'field'    => 'name',
-        'terms'    => 'featured',
-        'operator' => 'IN'
-      )
-    )
-  );
-  $recent_products = new WP_Query( $query_args );
-
-  if(!$recent_products -> have_posts()) {
-    return;
-  }
-  $_post = $recent_products -> posts[0];
-  $_parent = wc_get_product($_post -> ID);
-
-  error_log('product type : ' .print_r($_parent->get_type(),1));
-
-  if($_parent -> get_type() !== 'variable') {
-    // if(!$_parent -> is_in_stock()) {
-    //   return;
-    // }
-    $_parent -> date = larula_get_product_start_date($_parent);
-    $_parent -> time = larula_get_product_start_time($_parent);
-
-    if($_parent -> date == null || $_parent -> time == null){
-      return;
-    }
-
-    if(!larula_is_product_time_available($_parent -> date, $_parent -> time)) {
-      return;
-    }
-
-    $timeString = str_replace ( '-' , ':', $_parent -> date) . ' ' . $_parent -> time . ':00';
-    $date = new DateTime($timeString, new DateTimeZone("America/Bogota"));
-    $_parent -> date = $date;
-    $_parent -> until_event = $tnow -> diff($date);
-    $_parent -> milliseconds = $date -> getTimestamp() - $tnow -> getTimestamp();
-    $_parent -> maximun_seats = larula_get_product_maximun_seats($_parent);
-    $_parent -> estimated_hours = larula_get_product_estimated_hours($_parent);
-
-    $_product = $_parent;
-  }
-  else {
-    $variations = $_parent -> get_available_variations();
-  
-    // Find closest variation (according to time and date fields)
-    $next_variation = array();
-    foreach($variations as $_variation_object) {
-      $_variation = wc_get_product($_variation_object['variation_id']);
-  
-      if(!$_variation -> variation_is_active()) {
-        continue;
-      }
-      // if(!$_variation -> is_in_stock()) {
-      //   continue;
-      // }
-      $_variation -> date = larula_get_product_start_date($_variation );
-      $_variation -> time = larula_get_product_start_time($_variation );
-  
-      if($_variation -> date == null || $_variation -> time == null){
-        continue;
-      }
-  
-      if(!larula_is_product_time_available($_variation -> date, $_variation -> time)) {
-        continue;
-      }
-  
-      $timeString = str_replace ( '-' , ':', $_variation -> date) . ' ' . $_variation -> time . ':00';
-      $date = new DateTime($timeString, new DateTimeZone("America/Bogota"));
-  
-      $_variation -> date = $date;
-      $_variation -> milliseconds = $date -> getTimestamp();
-      
-      if(!empty($next_variation)) {
-        $interval = $next_variation -> milliseconds - $_variation -> milliseconds;
-        
-        if($interval < 0) {
-          continue;
-        }
-      }
-  
-      $_variation -> until_event = $tnow -> diff($date);
-      $_variation -> milliseconds = $date -> getTimestamp() - $tnow -> getTimestamp();
-      $_variation -> maximun_seats = larula_get_product_maximun_seats($_variation);
-      $_variation -> estimated_hours = larula_get_product_estimated_hours($_variation);
-  
-      $next_variation = $_variation;
-    }
-
-    if(empty($next_variation)) {
-      return;
-    }
-
-    $_product = $next_variation;
-  }
+  $_product = larula_get_featured_product();
+  $_parent = $_product -> parent_object;
 
   // Store featured product in cache to avoid it in the slider.
-  if(FALSE === wp_cache_get( 'featured_event' )) {
-		wp_cache_add( 'featured_event', array() );
-	}
-	else {
-		wp_cache_set( 'featured_event', array() );
-	}
+  // if(FALSE === wp_cache_get( 'featured_event_parent' )) {
+	// 	wp_cache_add( 'featured_event_parent', array() );
+	// }
+	// else {
+	// 	wp_cache_set( 'featured_event_parent', array() );
+	// }
 	// if($best_product != -1) {
 	// 	$parent_id = $recent_products[$best_product] -> get_id();
 	// 	$product = $recent_products[$best_product];
@@ -774,7 +797,7 @@ function larula_build_featured_course_banner () {
 	// 	$parent_id = $product -> get_parent_id();
 	// 	$parent = wc_get_product( $parent_id );
 	// }
-  wp_cache_set( 'featured_event', array($_parent -> get_id()) );
+  // wp_cache_set( 'featured_event_parent', array($_parent -> get_id()) );
 
   $wp_query -> query_vars['larula_args'] = (object)[];
   $wp_query -> query_vars['larula_args'] -> product = $_product;
@@ -796,14 +819,14 @@ function larula_build_featured_course_banner () {
 add_shortcode( 'larula_home_banner', 'larula_build_featured_course_banner' );
 
 
-function larula_build_home_product_slider () {
+function larula_build_home_product_slider ($atts) {
   global $wp_query;
 
   $a = shortcode_atts( array(
 		'simple' => true,
 	), $atts );
 
-  $featured_event = wp_cache_get( 'featured_event' );
+  $featured_event = wp_cache_get( 'featured_event_parent' );
 
   $query_args  = array(
     'post_type' => 'product',

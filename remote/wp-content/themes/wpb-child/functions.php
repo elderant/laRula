@@ -1,5 +1,7 @@
 <?php 
 
+include( '/inc/admin/admin.php' );
+
 add_action( 'wp_enqueue_scripts', 'wpb_child_enqueue_styles' );
 function wpb_child_enqueue_styles() {
 	wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
@@ -21,7 +23,18 @@ add_action( 'woocommerce_after_shop_loop_item_title', 'larula_wc_template_loop_p
 
 remove_action( 'woocommerce_after_shop_loop_item', 'larula_wc_template_loop_product_column_close', 5 );
 remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
-add_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_single_add_to_cart', 11 );
+
+$options = get_option('larula_options');
+if($options['hide_not_featured']) {
+	add_action( 'woocommerce_after_shop_loop_item', 'larula_template_loop_preins_form', 11 );
+	remove_action('woocommerce_after_shop_loop_item', 'woocommerce_template_single_add_to_cart', 11);
+}
+else {
+	add_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_single_add_to_cart', 11 );
+	remove_action('woocommerce_after_shop_loop_item', 'larula_template_loop_preins_form', 11);
+}
+
+
 add_action( 'woocommerce_after_shop_loop_item', 'larula_wc_template_loop_product_column_close', 15 );
 add_action( 'woocommerce_after_shop_loop_item', 'larula_wc_template_loop_product_row_close', 16 );
 
@@ -66,6 +79,9 @@ function larula_wc_change_cart_form_action($permalink) {
 }
 add_filter( 'woocommerce_add_to_cart_form_action', 'larula_wc_change_cart_form_action', 10, 1 );
 
+function larula_template_loop_preins_form() {
+	echo do_shortcode('[contact-form-7 id="375" title="Preinscripcion" html_class="wpcf7-form preins-form"]');
+}
 
 /******************** Reorder single page product display ********************/
 add_action( 'woocommerce_before_single_product', 'larula_wc_show_product_category', 5 );
@@ -126,3 +142,26 @@ function larula_checkout_billing_fields_customization( $address_fields ) {
 	return $address_fields;
 }
 add_filter( 'woocommerce_billing_fields', 'larula_checkout_billing_fields_customization', 10, 1 );
+
+
+function larula_wpcf7_contact_form( $instance ) { 
+	if($instance -> id() == 375 && !is_admin()) {
+		if(is_shop()) {
+			global $product;
+			$porperties = $instance -> get_properties();
+		
+			$porperties['form'] = str_replace('DefaultValue', $product->get_name(), $porperties['form']);
+			$instance -> set_properties($porperties);
+		}
+		else {
+			$_product = larula_get_featured_product();
+			$porperties = $instance -> get_properties();
+		
+			$porperties['form'] = str_replace('DefaultValue', $_product->get_name(), $porperties['form']);
+			$instance -> set_properties($porperties);
+		}
+	}
+}; 
+			 
+// add the action 
+add_action( 'wpcf7_contact_form', 'larula_wpcf7_contact_form', 10, 1 ); 

@@ -195,17 +195,123 @@ body:not(.theme-preset-active) #masthead .navbar-nav > li.current_page_item > a 
 
 .page-template-fullwidth-banner header .page-banner .banner-content {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
+	top: 20%;
+	width: 100%;
 	text-align: center;
 	color: var(--red);
+}
+
+.page-template-fullwidth-banner header .page-banner .banner-custom-content {
+	padding-top: 5%;
 }
 
 .page-template-fullwidth-banner header .page-banner .banner-content a {
 	margin-top: 1.5rem;
 }
 
+/* banner : default */
+/* banner : default : form */
+.wpcf7-form.preins-form {
+	background-color: var(--black);
+	padding: 1rem;
+	border-radius: 20px;
+	box-shadow: var(--black) 0px 1px 2px 0px;
+}
+
+.wpcf7-form.preins-form h4 {
+	margin-bottom: 1rem;
+}
+
+.wpcf7-form.preins-form .form-fields .form-field-container {
+	padding-bottom: 1rem;
+	text-align: left;
+}
+
+.wpcf7-form.preins-form .form-fields .form-field-container.taller-name {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.wpcf7-form.preins-form .form-fields .taller-name label {
+	display: inline-block;
+	width: auto;
+	margin: 0;
+	padding: .375rem .75rem;
+}
+
+.wpcf7-form.preins-form .form-fields .taller-name > span {
+	flex-grow: 1;
+}
+
+.wpcf7-form.preins-form .form-fields .taller-name > span input {
+	background-color: transparent;
+}
+
+.wpcf7-form.preins-form div.wpcf7-validation-errors {
+	color: var(--white);
+}
+
+/* banner : default : Thumbnail */
+.page-template-fullwidth-banner header .taller-image img {
+	object-fit: contain;
+	height: auto;
+	padding-top: 2rem;
+}
+
+.page-template-fullwidth-banner header .taller-image .countdown {
+	display: inline-block;
+	margin-top: 1rem;
+	border-radius: 20px;
+	padding: 0.375rem 0.75rem;
+	background-color: var(--black);
+	box-shadow: var(--black) 0px 1px 2px 0px;
+}
+
+/* banner : default : content */
+
+.page-template-fullwidth-banner header .taller-info-container {
+	max-height: 600px;
+	overflow: hidden;
+	border: 1px solid var(--black);
+	border-radius: 20px;
+	padding: 1rem;
+	background-color: rgba(255,255,255,0.6);
+	color: var(--black);
+	box-shadow: var(--black) 0px 1px 2px 0px;
+	text-align: left;
+}
+
+.page-template-fullwidth-banner header .taller-info-container > div {
+	padding-top: 0.5em;
+}
+
+.page-template-fullwidth-banner header .taller-info div.actions {
+	padding-top: 1em;
+}
+
+.page-template-fullwidth-banner header .taller-info .label {
+	padding-right: 0.5em;
+}
+
+.page-template-fullwidth-banner header .taller-info .name {
+	margin-bottom: 1.5em;
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: 900;
+	color: var(--red);
+}
+
+.page-template-fullwidth-banner header .taller-info .variation-description,
+.page-template-fullwidth-banner header .taller-info .parent-excerpt,
+.page-template-fullwidth-banner header .taller-info .parent-description {
+	max-height: calc(6em + 0.5em);
+	overflow: hidden;
+}
+
+.page-template-fullwidth-banner header .page-banner .banner-content .taller-info a {
+	margin-top: 0;
+}
 /****************** Footer ********************/
 #footer-widget .color-strip {
 	background-image: url(/larula/wp-content/uploads/page-footer-lines-1.png);
@@ -683,6 +789,25 @@ a.button:hover {
 	border-color: var(--red);
 }
 
+/****************** Contact form ********************/
+/* Messages */
+div.wpcf7-validation-errors {
+	border-color: var(--warning);
+}
+
+div.wpcf7-mail-sent-ng {
+	color: var(--danger);
+}
+
+span.wpcf7-not-valid-tip {
+	color: var(--danger);
+}
+
+.wpcf7-form .wpcf7-form-control-wrap input::placeholder, 
+.wpcf7-form .wpcf7-form-control-wrap textarea::placeholder {
+	color: white;
+}
+
 /****************** landing ********************/
 .page-id-281 .entry-content {
 	margin-top: 5rem;
@@ -788,6 +913,39 @@ a.button:hover {
 
 .woocommerce ul.products li.product .single_variation .price {
 	font-size: inherit;
+}
+
+.woocommerce li.product .wpcf7-form.preins-form {
+	background: none;
+	box-shadow: none;
+	border-radius: initial;
+	padding: 0;
+}
+
+.woocommerce li.product .wpcf7-form.preins-form h3,
+.woocommerce li.product .wpcf7-form.preins-form h4 {
+	display: none;
+}
+
+.woocommerce li.product .wpcf7-form.preins-form .form-fields {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.woocommerce li.product .wpcf7-form.preins-form .form-fields .form-field-container {
+	padding: 0.5rem;
+}
+
+.woocommerce li.product .wpcf7-form.preins-form .form-fields .taller-name > span input {
+	color: var(--red);
+}
+
+.woocommerce li.product .wpcf7-form.preins-form .phone,
+.woocommerce li.product .wpcf7-form.preins-form .taller-name,
+.woocommerce li.product .wpcf7-form.preins-form .message,
+.woocommerce li.product .wpcf7-form.preins-form .submit {
+	grid-column-start: 1;
+	grid-column-end: 3;
 }
 
 /****************** Shop single ********************/

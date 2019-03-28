@@ -1,8 +1,7 @@
 ( function( $ ) {
 
-  var larula_update_timer = function() {
+  var larula_update_timer = function($countdown) {
     var x = setInterval(function() {
-      let $countdown = $('.page-id-10 .main-banner-section .countdown');
       let interval = $countdown.attr('milliseconds');
       
       interval = interval - 1;
@@ -231,8 +230,11 @@
   /* END Slider events */
 
   $(document).ready(function () {
+    if($('.page-id-10 .page-banner .countdown').length > 0) {
+      larula_update_timer($('.page-id-10 .page-banner .countdown'));
+    }
     if($('.page-id-10 .main-banner-section').length > 0) {
-      larula_update_timer();
+      larula_update_timer($('.page-id-10 .main-banner-section .countdown'));
       
       $('.main-banner-section .banner').on('mouseenter', function(event) {
         larula_handle_display_overlay(event);
@@ -245,7 +247,9 @@
       $('.main-banner-section .additional-info').on('mouseleave', function(event) {
         larula_handle_hide_overlay(event);
       });
+    }
 
+    if($('.page-id-10 .product-slider-section').length > 0) {
       $('.page-id-10 .slider-container .slider-paging .page-button').each(function(){
         $(this).on('click', function(event){
           larula_slider_handle_page_change(event);
