@@ -445,14 +445,6 @@ function larula_add_custom_field_variation_data( $variations ) {
     $variations['_taller_start_date'] = '<span class="woocommerce_taller_start_date_time hidden"></span>';
   }
   
-  // Modifications woocommerce defaults
-  if(!empty($variations['price_html'])) {
-    $variations['price_html'] = '<span class="woocommerce_price_html"><span class="price-label">' . __('Precio :','larula') . '</span>' . $variations['price_html'] . '</span>';
-  }
-  else {
-    $variations['price_html'] = '<span class="woocommerce_price_html hidden"></span>';
-  }
-
   return $variations;
 }
 add_filter( 'woocommerce_available_variation', 'larula_add_custom_field_variation_data' );
@@ -486,10 +478,28 @@ function larula_deactivate_past_taller() {
       continue;
     }
 
-    // TODO Simple product
+    
     if(strcasecmp($type, 'simple') == 0) {
-      error_log('simple : TODO');
-      continue;
+      $_product -> date = larula_get_product_start_date($_product);
+      $_product -> time = larula_get_product_start_time($_product);
+
+      if($_product -> date == null || $_product -> time == null){
+        continue;
+      }
+
+      if(larula_is_product_time_available($_product -> date, $_product -> time)) {
+        continue;
+      }
+
+      error_log('Deactivating product : ' . print_r($id,1));
+      // if($_product -> variation_is_active()) {
+      //   $_product -> set_status('private');
+      //   $_product -> save();
+      // }
+
+      if($_product -> is_in_stock()) {
+        wc_update_product_stock($_product, 0, 'set');
+      }
     }
 
     if(strcasecmp($type, 'variable') == 0) {
@@ -497,15 +507,19 @@ function larula_deactivate_past_taller() {
       $variations = $_product -> get_available_variations();
       foreach($variations as $_variation_object) {
         $_variation = wc_get_product($_variation_object['variation_id']);
-        $_variation -> date = get_post_meta($_variation -> get_id(), '_taller_start_date', true );
-        $_variation -> time = get_post_meta($_variation -> get_id(), '_taller_start_hour', true );
+        $_variation -> date = larula_get_product_start_date($_variation);
+        $_variation -> time = larula_get_product_start_time($_variation);
         error_log('evaluating variation : ' . print_r($_variation -> get_id(),1));
+        
+        if($_variation -> date == null || $_variation -> time == null){
+          continue;
+        }
 
         if(larula_is_product_time_available($_variation -> date, $_variation -> time)) {
           continue;
         }
   
-        error_log('Deactivating variation' . print_r($_variation_object['variation_id'],1));
+        error_log('Deactivating variation : ' . print_r($_variation_object['variation_id'],1));
         if($_variation -> variation_is_active()) {
           $_variation -> set_status('private');
           $_variation -> save();

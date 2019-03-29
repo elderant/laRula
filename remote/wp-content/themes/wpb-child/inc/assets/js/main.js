@@ -15,10 +15,15 @@
   $(document).ready(function () {
     if($('.woocommerce.archive').length > 0) {
       let params = getUrlVars();
-      if(jQuery.inArray('id', params) != -1) {
+      if($.inArray('id', params) != -1) {
         $id = params['id'];
 
-        jQuery("html, body").animate({ scrollTop: jQuery('.products  #post-106').offset().top - 128}, 500);
+        if($('.products #' + $id).length > 0) {
+          $("html, body").animate({ scrollTop: $('.products #' + $id).offset().top - 128}, 500);
+        }
+        else if($('#' + $id + '.featured-product').length > 0) {
+          $("html, body").animate({ scrollTop: $('#' + $id + '.featured-product').offset().top - 128}, 500);
+        }
       }
       
     }

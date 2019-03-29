@@ -24,6 +24,19 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
 }
 ?>
+<?php 
+	$options = get_option('larula_options');
+	if($options['hide_not_featured']) {
+		$_product = larula_get_featured_product();
+		$type = $_product -> get_type();
+		if($type === 'variation' && $_product -> parent_object -> get_id() == $product -> get_id()) {
+			return;
+		}
+		elseif($type !== 'variation' && $_product -> get_id() == $product -> get_id()) {
+			return;
+		}
+	}
+?>
 <li <?php wc_product_class(); ?> id="post-<?php echo $product -> get_Id()?>">
 	<?php
 	/**

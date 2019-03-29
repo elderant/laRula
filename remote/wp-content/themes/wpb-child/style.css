@@ -209,6 +209,11 @@ body:not(.theme-preset-active) #masthead .navbar-nav > li.current_page_item > a 
 	margin-top: 1.5rem;
 }
 
+body.page-template-fullwidth-banner:not(.theme-preset-active) #masthead .navbar-nav > li > a,
+body.page-template-fullwidth-banner:not(.theme-preset-active) #masthead .navbar-nav > li > a {
+	text-shadow: var(--black) 0px 1px 0;
+}
+
 /* banner : default */
 /* banner : default : form */
 .wpcf7-form.preins-form {
@@ -946,6 +951,26 @@ span.wpcf7-not-valid-tip {
 .woocommerce li.product .wpcf7-form.preins-form .submit {
 	grid-column-start: 1;
 	grid-column-end: 3;
+}
+
+/* featured product */
+.woocommerce li.product.featured-product {
+	list-style: none outside;
+	padding-bottom: 2rem;
+}
+
+.woocommerce li.product.featured-product .woocommerce-loop-product__title {
+	padding: .5em 0;
+	margin: 0;
+	font-size: 1em;
+}
+
+.woocommerce li.product.featured-product .price {
+	color: var(--green-dark);
+	display: block;
+	font-weight: 400;
+	margin-bottom: .5em;
+	font-size: .857em;
 }
 
 /****************** Shop single ********************/
