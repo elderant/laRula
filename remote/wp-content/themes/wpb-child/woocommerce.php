@@ -12,13 +12,13 @@
  * @package WP_Bootstrap_Starter
  */
 
-get_header(); ?>
+get_header('wrapper'); ?>
 
     <section id="primary" class="content-area col-sm-12 col-md-12 col-lg-12">
         <main id="main" class="site-main" role="main">
 
             <?php woocommerce_content(); ?>
-            <?php /*larula_get_page_footer_html();*/ ?>
+            <?php larula_get_page_footer_html(); ?>
         </main><!-- #main -->
     </section><!-- #primary -->
 

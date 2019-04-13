@@ -29,15 +29,17 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	if($options['hide_not_featured']) {
 		$_product = larula_get_featured_product();
 		$type = $_product -> get_type();
-		if($type === 'variation' && $_product -> parent_object -> get_id() == $product -> get_id()) {
-			return;
-		}
-		elseif($type !== 'variation' && $_product -> get_id() == $product -> get_id()) {
-			return;
+		if(in_the_loop()){
+			if($type === 'variation' && $_product -> parent_object -> get_id() == $product -> get_id()) {
+				return;
+			}
+			elseif($type !== 'variation' && $_product -> get_id() == $product -> get_id()) {
+				return;
+			}
 		}
 	}
 ?>
-<li <?php wc_product_class(); ?> id="post-<?php echo $product -> get_Id()?>">
+<li <?php wc_product_class(''); ?> id="post-<?php echo $product -> get_Id()?>">
 	<?php
 	/**
 	 * Hook: woocommerce_before_shop_loop_item.

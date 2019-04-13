@@ -11,7 +11,7 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="row">
-		<div class="post-thumbnail <?php echo !is_single()? 'col-4 col-md-4 col-sm-12':'';?>">
+		<div class="post-thumbnail <?php echo !is_single()? 'col-6':'';?>">
 			<?php
 				if ( is_single() ) :
 					the_post_thumbnail();
@@ -20,7 +20,7 @@
 				endif;?>
 			<?php  ?>
 		</div>
-		<div class="entry-information <?php echo !is_single()? 'col-8 col-md-8 col-sm-12':'';?>">
+		<div class="entry-information <?php echo !is_single()? 'col-6':'';?>">
 			<header class="entry-header">
 				<?php
 				if ( is_single() ) :
@@ -53,6 +53,10 @@
 
 			<footer class="entry-footer">
 				<?php wp_bootstrap_starter_entry_footer(); ?>
+				<?php if(is_single()) {
+					larula_get_page_footer_html();
+				 } 
+				?>
 			</footer><!-- .entry-footer -->
 		</div>
 	</div>

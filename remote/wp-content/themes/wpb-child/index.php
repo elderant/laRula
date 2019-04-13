@@ -12,7 +12,7 @@
  * @package WP_Bootstrap_Starter
  */
 
-get_header(); ?>
+get_header('wrapper'); ?>
 
 	<section id="primary" class="content-area col-sm-12 col-md-12 col-lg-12">
 		<main id="main" class="site-main" role="main">
@@ -21,14 +21,15 @@ get_header(); ?>
 		if ( have_posts() ) :
 
 			if ( is_home() && ! is_front_page() ) : ?>
-				<header>
-					<h1 class="page-title page-header"><?php single_post_title(); ?></h1>
+				<header class="row">
+					<h1 class="page-title page-header larula-background-title col-12" data-highlight="<?php echo larula_post_background_title(); ?>"><?php single_post_title(); ?></h1>
 					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
 				</header>
 
 			<?php
 			endif;
 
+			?><div class="row"><?php
 			/* Start the Loop */
 			while ( have_posts() ) : the_post();
 
@@ -48,11 +49,11 @@ get_header(); ?>
 			get_template_part( 'template-parts/content', 'none' );
 
 		endif; ?>
-
+			</div>
 		</main><!-- #main -->
 	</section><!-- #primary -->
 
 <?php
-// larula_get_page_footer_html();
+larula_get_page_footer_html();
 get_sidebar();
 get_footer();

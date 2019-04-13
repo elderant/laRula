@@ -1,5 +1,43 @@
 ( function( $ ) {
 
+  var larula_update_splited_timer = function($countdown) {
+    var x = setInterval(function() {
+      let oldInterval = $countdown.attr('milliseconds');
+      let interval = oldInterval - 1;
+      
+      $countdown.attr('milliseconds', interval);
+
+      if (interval < 0) {
+        clearInterval(x);
+        $countdown.find('.seconds .value').html(0);
+        $countdown.find('.minutes .value').html(0);
+        $countdown.find('.hours .value').html(0);
+        $countdown.find('.days .value').html(0);
+      }
+      else {
+        let days = Math.floor(interval / (60 * 60 * 24));
+        let hours = Math.floor((interval % (60 * 60 * 24)) / (60 * 60));
+        let minutes = Math.floor((interval % (60 * 60)) / (60));
+        let seconds = Math.floor(interval % (60));
+
+        let oldHours = Math.floor((interval % (60 * 60 * 24)) / (60 * 60));
+        let oldMinutes = Math.floor((interval % (60 * 60)) / (60));
+        
+
+        $countdown.find('.seconds .value').html(seconds);
+        if(seconds === 59) {
+          $countdown.find('.minutes .value').html(minutes);
+        }
+        if(minutes === 59 && oldMinutes !== 59) {
+          $countdown.find('.hours .value').html(hours);
+        }
+        if(hours === 23 && oldHours !== 23) {
+          $countdown.find('.days .value').html(days);
+        }
+      }
+    }, 1000);
+  }
+
   var larula_update_timer = function($countdown) {
     var x = setInterval(function() {
       let interval = $countdown.attr('milliseconds');
@@ -230,6 +268,9 @@
   /* END Slider events */
 
   $(document).ready(function () {
+    if($('body .countdown.splitted').length > 0) {
+      larula_update_splited_timer($('body .countdown.splitted'));
+    }
     if($('.page-id-10 .page-banner .countdown').length > 0) {
       larula_update_timer($('.page-id-10 .page-banner .countdown'));
     }

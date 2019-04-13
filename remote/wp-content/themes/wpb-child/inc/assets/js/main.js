@@ -1,4 +1,5 @@
 ( function( $ ) {
+  window.debounce_timer = 0;
 
   function getUrlVars() {
     var vars = [], hash;
@@ -11,7 +12,33 @@
     }
     return vars;
   } 
+  
+  //************** Window Scroll ************************//
+	var goToTopDebouncer = function(event) {
+		if(window.debounce_timer) {
+			window.clearTimeout(debounce_timer);
+		}
+		
+		debounce_timer = window.setTimeout(function() {
+      if(window.scrollY > 500){
+        let $goToTop = $('#footer-widget .go-to-top');
+        if(!$goToTop.hasClass('display')) {
+          $goToTop.toggleClass('display');
+        }
+      }
+      else {
+        let $goToTop = $('#footer-widget .go-to-top');
+        if($goToTop.hasClass('display')) {
+          $goToTop.toggleClass('display');
+        }
+      }
+      //console.log(window.scrollY);
+		}, 100);
+	}
+	
+	$(window).on( 'scroll', goToTopDebouncer );
 
+  //************** Document Ready ************************//
   $(document).ready(function () {
     if($('.woocommerce.archive').length > 0) {
       let params = getUrlVars();
@@ -21,11 +48,18 @@
         if($('.products #' + $id).length > 0) {
           $("html, body").animate({ scrollTop: $('.products #' + $id).offset().top - 128}, 500);
         }
-        else if($('#' + $id + '.featured-product').length > 0) {
-          $("html, body").animate({ scrollTop: $('#' + $id + '.featured-product').offset().top - 128}, 500);
+        else if($('#' + $id + '.featured').length > 0) {
+          $("html, body").animate({ scrollTop: $('#' + $id + '.featured').offset().top - 128}, 500);
         }
       }
       
     }
+    if($('#footer-widget .go-to-top').length > 0) {
+      let $goToTop = $('#footer-widget .go-to-top');
+      $goToTop.on('click', function(event) {
+        $('html, body').animate({scrollTop:0}, '1000');
+      });
+    }
+
   });
 } (jQuery) );

@@ -1,9 +1,17 @@
-<footer class="entry-footer">
-	<div class="social-links">
-		<a class="facebook" href="https://www.facebook.com/enlarula/"><i class="fab fa-facebook-f"></i></a>
-		<a class="instagram" href="https://www.instagram.com/la_rula_taller/"><i class="fab fa-instagram"></i></a>
+<?php if(!is_single()) :?>
+	<footer class="entry-footer">
+<?php endif;?>
+	<div class="row column-footer justify-content-center align-content-center">
+		<div class="first-column col-lg-4 col-md-4 col-sm-12">
+			<img src="http://localhost/larula/wp-content/uploads/2019/03/page-logo.png" alt="La rula taller">
+		</div>
+		<div class="second-column col-lg-4 col-md-4 col-sm-12">
+			Some content here
+		</div>
+		<div class="third-column col-lg-4 col-md-4 col-sm-12">
+			Someother content here
+		</div>
 	</div>
-	<div class="rainbow-strip">
-		<img src="http://localhost/larula/wp-content/uploads/page-footer-lines-1.png" alt="Color line strip">
-	</div>
+<?php if(!is_single()) :?>
 </footer>
+<?php endif;?>

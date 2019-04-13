@@ -1,45 +1,18 @@
 <?php
   $product = $larula_args -> product;
-  $parent = $larula_args -> parent_product;
 ?>
-<div class="main-banner-section col-12">
-    <div class="banner">
-      <?php echo $product -> get_image(); ?>
-      <span class="countdown" milliseconds="<? echo $product -> milliseconds;?>"> 
-        <?php echo $product -> until_event -> format('%a dias %h horas %i minutos %s segundos'); ?>
-      </span>
+<div class="banner-content">
+  <div class="row">
+    <div class="taller-image">
+      <?php $image = get_field( 'featured_banner_image', $larula_args -> parent_product -> get_id() );?> 
+      <img  class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" 
+            src="<?php echo $image;?>"
+            alt="banner image">
     </div>
-    <div class="additional-info overlay hidden">
-      <div class="additional-info-container">
-        <div class="name"><?php echo $product -> get_name();?></div>
-        <div class="price"><?php echo '<span class="label">' . __('Precio :','larula') . '</span><span class="price value">' . wc_price( $product->get_price() ) . '</span>';?></div>
-        <div class="estimated-hours"><?php echo '<span class="label">' . __('Intensidad horaria :', 'larula') . '</span><span class="hours value">' . $product -> estimated_hours . '</span>';?></div>
-        <div class="maximun-seats"><?php echo '<span class="label">' . __('Cupos :', 'larula') . '</span><span class="seats value">' . $product -> get_stock_quantity() . '/' . $product -> maximun_seats . '</span>';?></div>
-        <?php if (strcasecmp( $product -> get_type(), 'variation' ) == 0) : ?>
-          <div class="variation-description"><?php echo $product -> get_description();?></div>
-        <?php endif; ?>
-        <div class="parent-excerpt"><?php echo $parent -> get_short_description();?></div>
-        <div class="parent-description"><?php echo $parent -> get_description();?></div>
-        <div class="actions">
-          <a class="button alt" href="http://localhost/larula/talleres/?id=post-<?php echo $parent -> get_id()?>"><?php _e('Ver mas', 'larula');?></a>
-          <?php if (strcasecmp( $product -> get_type(), 'variation' ) == 0) : ?>
-            <a class="button alt" href="http://localhost/larula/checkout/?<?php 
-              $url = 'add-to-cart=' . $parent -> get_id() . '&variation_id=' . $product -> get_id();
-              $attribures = $product -> get_attributes();
-              foreach ($attribures as $key => $value) {
-                $value = utf8_uri_encode( $value );
-                $value = str_replace('/', '%2F', $value);
-                $url .= '&attribute_pa_' . $key . '=' . $value;
-              }
-              echo $url;
-            ?>"><?php _e('Comprar', 'larula');?></a>
-          <?php else: ?>
-            <a class="button alt" href="http://localhost/larula/checkout/?<?php 
-              $url = 'add-to-cart=' . $parent -> get_id() . '&variation_id=' . $product -> get_id();
-              echo $url;
-            ?>"><?php _e('Comprar', 'larula');?></a>
-          <?php endif; ?>
-        </div>
+    <div class="taller-info offset-lg-6 offset-sm-0 col-lg-6 col-sm-12 justify-content-start">
+      <div class="taller-info-container">
+        <?php echo do_shortcode('[contact-form-7 id="375" title="Preinscripcion" html_class="wpcf7-form preins-form"]');?>
       </div>
     </div>
   </div>
+</div>

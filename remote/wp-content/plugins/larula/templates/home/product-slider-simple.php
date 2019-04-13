@@ -2,7 +2,7 @@
   $variations = $larula_args -> variations;
   $slides_count = count($variations);
 ?>
-<div class="row product-slider-section slider-container simple col-12" data-slides="<?php echo $slides_count;?>">
+<div class="product-slider-section slider-container simple col-12" data-slides="<?php echo $slides_count;?>">
   <?php $i = 0;?>
   <ul class="slides col-12">
     <?php foreach($variations as $variation) :?>
