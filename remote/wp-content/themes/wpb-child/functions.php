@@ -15,7 +15,6 @@ function larula_post_background_title() {
 	return $background_title;
 }
 
-
 /******************** shop display ********************/
 //page title
 add_filter('woocommerce_show_page_title', function() {
@@ -298,9 +297,7 @@ function larula_cart_on_checkout_page_only() {
 	if ( is_wc_endpoint_url( 'order-received' ) ) return;
 	echo do_shortcode('[woocommerce_cart]');
 }
-
 add_action( 'woocommerce_before_checkout_form', 'larula_cart_on_checkout_page_only', 5 );
-
 
 function larula_redirect_empty_cart_checkout_to_home () {
 	if ( is_cart() && 
@@ -334,6 +331,10 @@ function larula_checkout_billing_fields_customization( $address_fields ) {
 }
 add_filter( 'woocommerce_billing_fields', 'larula_checkout_billing_fields_customization', 10, 1 );
 
+function larula_default_order_status_completed(  $order_id, $posted_data, $order ) {
+	$order->update_status( 'completed' );
+}
+add_filter( 'woocommerce_checkout_order_processed', 'larula_default_order_status_completed', 10, 3 );
 
 /******************** Blog ********************/
 // define the the_content_more_link callback 
@@ -376,6 +377,11 @@ function larula_get_events_html($order) {
 
 		$_product = wc_get_product($product_id);
 		$_variation = wc_get_product($product_variation_id);
+
+		if ($product_variation_id !== 0) {
+			$product_id = $product_variation_id;
+			$_product = $_variation;
+		}
 		
 		array_push($wp_query -> query_vars['larula_args'], array('product' => $_product, 'variation' => $_variation));
 		get_template_part('template-parts/email-order', 'item-invitation');

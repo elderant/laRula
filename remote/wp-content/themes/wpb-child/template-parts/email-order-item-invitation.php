@@ -1,8 +1,6 @@
 <?php global $wp_query;
   $_product = $larula_args[sizeof($larula_args) - 1]['product'];
   $_variation = $larula_args[sizeof($larula_args) - 1]['variation'];
-  
-  $_product = $_variation;
   ?>
 <div style='margin-bottom: 40px;'>
   <div style='color: #ffffff; 

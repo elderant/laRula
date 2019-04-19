@@ -598,7 +598,7 @@ function larula_deactivate_cron_jobs() {
 }
 
 
-function larula_taller_available_validation( $passed, $product_id, $quantity, $variation_id, $variations ) {
+function larula_taller_available_validation( $passed, $product_id, $quantity, $variation_id = null, $variations = null ) {
   $_product = wc_get_product($product_id);
   $type = $_product -> get_type();
 
@@ -644,7 +644,7 @@ function larula_taller_available_validation( $passed, $product_id, $quantity, $v
 
   return true;
 }
-add_action( 'woocommerce_add_to_cart_validation', 'larula_taller_available_validation', 10, 5 );
+add_filter( 'woocommerce_add_to_cart_validation', 'larula_taller_available_validation', 10, 5 );
 
 /************************************************************/
 /************************ Home functions ********************/
