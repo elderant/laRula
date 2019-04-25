@@ -2,14 +2,28 @@
 	<footer class="entry-footer">
 <?php endif;?>
 	<div class="row column-footer justify-content-center align-content-center">
-		<div class="first-column col-lg-4 col-md-4 col-sm-12">
-			<img src="http://localhost/larula/wp-content/uploads/2019/03/page-logo.png" alt="La rula taller">
-		</div>
-		<div class="second-column col-lg-4 col-md-4 col-sm-12">
-			Some content here
-		</div>
-		<div class="third-column col-lg-4 col-md-4 col-sm-12">
-			Someother content here
+		<div class="grid-container">
+			<div class="label">
+				<span>Con el apoyo de :</span>
+			</div>
+			<!-- <div class="sharecollab">
+				<img src="/wp-content/uploads/footer-logo-sharecollab.png" alt="Sharecollab">
+			</div>
+			<div class="connecting-the-dots">
+				<img src="/wp-content/uploads/footer-logo-connectingthedots.jpg" alt="Connecting the dots">
+			</div> -->
+			<div class="universidad-central">
+				<img src="/wp-content/uploads/footer-logo-ucentral.png" alt="Universidad central">
+			</div>
+			<div class="tinkko">
+				<img src="/wp-content/uploads/footer-logo-tinkko.png" alt="phylo">
+			</div>
+			<div class="pylo">
+				<img src="/wp-content/uploads/Phylo-Legal-Logo-Black.png" alt="phylo">
+			</div>
+			<div class="larula">
+				<img src="/wp-content/uploads/page-logo.png" alt="La rula taller">
+			</div>
 		</div>
 	</div>
 <?php if(!is_single()) :?>

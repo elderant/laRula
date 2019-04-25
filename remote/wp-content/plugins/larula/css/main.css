@@ -128,10 +128,15 @@
   animation: failRight 0.3s forwards ease;
 }
 
+/* directional arrows */
 .home .slider-container .direction-container {
   position: absolute;
   top: 50%;
   transition: transform 0.3s linear;
+}
+
+.home .slider-container[data-slides="1"] .direction-container {
+  display: none;
 }
 
 .home .slider-container .direction-container.left {
@@ -143,33 +148,33 @@
 }
 
 @-webkit-keyframes failLeft {
-  0% { transform: translate(0%,0); }
-  50% { transform: translate(20%,0); }
-  100% { transform: translate(0%,0); }
+  0% { transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1); }
+  50% { transform: translate3d(96%, 0, 100px) rotateY(0deg) scale(1); }
+  100% { transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1); }
 }
 @-moz-keyframes failLeft {
-  0%{transform:translate(0%,0);}50%{transform:translate(20%,0);}100%{transform:translate(0%,0);}
+  0%{transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}50%{transform: translate3d(96%, 0, 100px) rotateY(0deg) scale(1);}100%{transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}
 }
 @-o-keyframes failLeft {
-  0%{transform:translate(0%,0);}50%{transform:translate(20%,0);}100%{transform:translate(0%,0);}
+  0%{transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1); }50%{transform: translate3d(96%, 0, 100px) rotateY(0deg) scale(1);}100%{transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}
 }
 @keyframes failLeft {
-  0%{transform:translate(0%,0);}50%{transform:translate(20%,0);}100%{transform:translate(0%,0);}
+  0%{transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}50%{transform: translate3d(96%, 0, 100px) rotateY(0deg) scale(1);}100%{transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}
 }
 
 @-webkit-keyframes failRight {
-  0% { transform: translate(0%,0); }
-  50% { transform: translate(-20%,0); }
-  100% { transform: translate(0%,0); }
+  0% { transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1); }
+  50% { transform: translate3d(136%, 0, 100px) rotateY(0deg) scale(1); }
+  100% { transform: translate3d(116%, 0, 100px) rotateY(0deg) scale(1); }
 }
 @-moz-keyframes failRight {
-  0%{transform:translate(0%,0);}50%{transform:translate(-20%,0);}100%{transform:translate(0%,0);}
+  0%{transform:translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}50%{transform:translate3d(136%, 0, 100px) rotateY(0deg) scale(1);}100%{transform:translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}
 }
 @-o-keyframes failRight {
-  0%{transform:translate(0%,0);}50%{transform:translate(-20%,0);}100%{transform:translate(0%,0);}
+  0%{transform:translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}50%{transform:translate3d(136%, 0, 100px) rotateY(0deg) scale(1);}100%{transform:translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}
 }
 @keyframes failRight {
-  0%{transform:translate(0%,0);}50%{transform:translate(-20%,0);}100%{transform:translate(0%,0);}
+  0%{transform:translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}50%{transform:translate3d(136%, 0, 100px) rotateY(0deg) scale(1);}100%{transform:translate3d(116%, 0, 100px) rotateY(0deg) scale(1);}
 }
 
 .home .slider-container .direction-button {
@@ -185,7 +190,7 @@
 }
 
 .home .slider-container .direction-button i {
-  padding: 7px;
+  padding: 7px 5px;
   color: var(--white);
   transition: all 0.5s ease;
 }
@@ -208,6 +213,7 @@
   outline: none;
 }
 
+/* paging */
 .home .slider-container .slider-paging {
   display: none;
   position: absolute;
@@ -333,14 +339,10 @@
 }
 
 @media (min-width: 992px) {
-  .home .slider-container {
-    height: 350px;
-  }
-
   /*Slide ui*/
   .home .slider-container .direction-container.left {
     left: 0;
-    transform: translate(-100%, 50%) rotate(240deg);
+    transform: translate(-105%, 50%) rotate(240deg);
   }
   
   .home .slider-container:hover .direction-container.left {
@@ -349,7 +351,7 @@
   
   .home .slider-container .direction-container.right {
     right: 0;
-    transform: translate(100%, -150%) rotate(240deg);
+    transform: translate(105%, -150%) rotate(240deg);
   }
   
   .home .slider-container:hover .direction-container.right {

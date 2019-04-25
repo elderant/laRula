@@ -47,12 +47,12 @@
               <div class="actions">
                 <?php $options = get_option('larula_options'); ?>
                 <?php if($options['hide_not_featured']) : ?>
-                  <a class="button alt" href="http://localhost/larula/talleres/?id=post-<?php echo $_parent -> get_id()?>"><?php _e('Ver mas', 'larula');?></a>
+                  <a class="button alt" href="/talleres/?id=post-<?php echo $_parent -> get_id()?>"><?php _e('Ver mas', 'larula');?></a>
                 <?php else :?>
-                  <a class="button alt" href="http://localhost/larula/talleres/?id=post-<?php echo $_parent -> get_id()?>"><?php _e('Ver mas', 'larula');?></a>
+                  <a class="button alt" href="/talleres/?id=post-<?php echo $_parent -> get_id()?>"><?php _e('Ver mas', 'larula');?></a>
                 <?php endif;?>
                 <?php if (strcasecmp( $_product -> get_type(), 'variation' ) == 0) : ?>
-                  <a class="button alt" href="http://localhost/larula/checkout/?<?php 
+                  <a class="button alt" href="/checkout/?<?php 
                     $url = 'add-to-cart=' . $_parent -> get_id() . '&variation_id=' . $_product -> get_id();
                     $attribures = $_product -> get_attributes();
                     foreach ($attribures as $key => $value) {
@@ -63,7 +63,7 @@
                     echo $url;
                   ?>"><?php _e('Comprar', 'larula');?></a>
                 <?php else: ?>
-                  <a class="button alt" href="http://localhost/larula/checkout/?<?php 
+                  <a class="button alt" href="/checkout/?<?php 
                     $url = 'add-to-cart=' . $_parent -> get_id() . '&variation_id=' . $_product -> get_id();
                     echo $url;
                   ?>"><?php _e('Comprar', 'larula');?></a>

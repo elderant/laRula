@@ -26,7 +26,7 @@
       ?>
       <li class="slide-container<?php echo $additionalClass;?>" data-page="<?php echo ++$i; ?>">
         <div class="row">
-          <a href="http://localhost/larula/talleres/?id=post-<?php echo $parent_id?>">
+          <a href="/talleres/?id=post-<?php echo $parent_id?>">
             <div class="info-container col-12">
               <div class="name"><?php echo $variation -> get_name();?></div>
             </div>  

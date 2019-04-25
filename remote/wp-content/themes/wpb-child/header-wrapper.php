@@ -44,10 +44,10 @@
 						<div class="row general-info">
 							<div class="social-links">
 								<div class="facebook">
-									<a class="facebook" href="https://www.facebook.com/enlarula/"><i class="fab fa-facebook-f"></i></a>
+									<a class="facebook" href="https://www.facebook.com/enlarula/" target="_blank"><i class="fab fa-facebook-f"></i></a>
 								</div>
 								<div class="instagram">
-									<a class="instagram" href="https://www.instagram.com/la_rula_taller/"><i class="fab fa-instagram"></i></a>
+									<a class="instagram" href="https://www.instagram.com/la_rula_taller/" target="_blank"><i class="fab fa-instagram"></i></a>
 								</div>
 							</div>
 						</div>
@@ -91,9 +91,11 @@
 					));
 					?>
 					<div class="header-actions">
-						<a class="button alt" href="http://localhost/larula/talleres/?id=post-<?php echo $_product -> parent_object -> get_id()?>"><?php _e('Ver mas', 'larula');?></a>
-						<?php if (strcasecmp( $_product -> get_type(), 'variation' ) == 0) : ?>
-							<a class="button" href="http://localhost/larula/checkout/?<?php 
+						<a class="button alt hidden" href="/talleres/?id=post-<?php echo $_product -> parent_object -> get_id()?>"><?php _e('Ver mas', 'larula');?></a>
+						<?php if(true) : ?>
+							<a class="button buy-link hidden" href="http://bit.ly/2DddRO4" rel="external" target="_blank"><?php _e('Comprar', 'larula'); ?></a>
+						<?php elseif (strcasecmp( $_product -> get_type(), 'variation' ) == 0) : ?>
+							<a class="button" href="/checkout/?<?php 
 							$url = 'add-to-cart=' . $_product -> parent_object -> get_id() . '&variation_id=' . $_product -> get_id();
 							$attribures = $_product -> get_attributes();
 							foreach ($attribures as $key => $value) {
@@ -104,7 +106,7 @@
 							echo $url;
 							?>"><?php _e('Comprar', 'larula');?></a>
 						<?php else: ?>
-							<a class="button" href="http://localhost/larula/checkout/?<?php 
+							<a class="button" href="/checkout/?<?php 
 							$url = 'add-to-cart=' . $_product -> parent_object -> get_id() . '&variation_id=' . $_product -> get_id();
 							echo $url;
 							?>"><?php _e('Comprar', 'larula');?></a>

@@ -37,8 +37,8 @@
             <div class="parent-excerpt"><?php echo $parent -> get_short_description();?></div>
             <div class="variation-description"><?php echo $variation -> get_description();?></div>
             <div class="actions">
-              <a class="button alt" href="http://localhost/larula/talleres/?id=post-<?php echo $parent_id?>">Ver mas</a>
-              <a class="button alt" href="http://localhost/larula/checkout/?<?php 
+              <a class="button alt" href="/talleres/?id=post-<?php echo $parent_id?>">Ver mas</a>
+              <a class="button alt" href="/larula/checkout/?<?php 
                 $url = 'add-to-cart=' . $parent_id . '&variation_id=' . $variation -> get_id();
                 $attribures = $variation -> get_attributes();
                 foreach ($attribures as $key => $value) {

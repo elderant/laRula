@@ -13,6 +13,98 @@
     return vars;
   } 
   
+  /**
+  * Disables all links and changes cursor for the website, used in ajax calls.
+  */
+ var webStateWaiting = function(waiting){
+    if(waiting) {
+      $('body').css('cursor', 'progress');
+    }
+    else {
+      $('body').css('cursor', 'default');
+    }
+    
+    $('a').each(function() {
+      if(!$(this).hasClass('disabled') && waiting && !$(this).hasClass('language-option') && !$(this).hasClass('menu-end-post-denominacion-a')) {
+        $(this).addClass('disabled');	
+      }
+      else if ($(this).hasClass('disabled') && !waiting && !$(this).hasClass('language-option') && !$(this).hasClass('menu-end-post-denominacion-a')) {
+        $(this).removeClass('disabled');
+      }
+    });
+  }
+
+  var larula_handle_show_proteccion_datos = function(event) {
+    // Add modal dialog if necesary
+    let $modal = $('body > .modal');
+    if( $modal.length == 0 ) {
+      $modalObject = $('<div></div>')
+        .addClass('modal')
+        .append(
+          $('<div></div>')
+          .addClass('modal-overlay')
+        );
+
+      $('body').append($modalObject);
+      $modal = $('body > .modal');
+
+      $modal.find('.modal-overlay').on('click', larula_handle_hide_proteccion_datos);
+    }
+
+    // Retreive privacy policy if necesary
+    let $contentContainer = $(event.target).parents('.proteccion-datos').find('.terms-and-conditions-content');
+    if($contentContainer.children().length == 0) {
+      $.ajax({
+        url : ajax_params.ajax_url,
+        type : 'post',
+        data : {
+          action : 'get_privacy_policy_html',
+        },
+        success : function( response ) {
+          $contentContainer.append(response);
+
+          // add policy to modal and display.
+          let $modalDialog = $modal.find('.modal-dialog.privacy-policy');
+
+          if( $modalDialog.length > 0 ) {
+            $modalDialog.toggleClass('hidden');
+          }
+          else {
+            $modalDialog = $contentContainer.find('.modal-dialog').clone();
+            $modal.append($modalDialog);
+          }
+
+          $modal.fadeIn(500);
+
+          webStateWaiting(false);
+        },
+        beforeSend: function() {
+          webStateWaiting(true);
+          return true;
+        },
+      });
+    }
+
+    // add policy to modal and display.
+    let $modalDialog = $modal.find('.modal-dialog.privacy-policy');
+
+    if( $modalDialog.length > 0 ) {
+      $modalDialog.toggleClass('hidden');
+    }
+    else {
+      $modalDialog = $contentContainer.find('.modal-dialog').clone();
+      $modal.append($modalDialog);
+    }
+
+    $modal.fadeIn(500);
+  }
+
+  var larula_handle_hide_proteccion_datos = function () {
+    $modal = $(this).parents('.modal');
+    $modal.fadeOut(500);
+    $modal.find('.modal-dialog:not(.hidden)').toggleClass('hidden');
+  }
+
   //************** Window Scroll ************************//
 	var goToTopDebouncer = function(event) {
 		if(window.debounce_timer) {
@@ -52,7 +144,6 @@
           $("html, body").animate({ scrollTop: $('#' + $id + '.featured').offset().top - 128}, 500);
         }
       }
-      
     }
     if($('#footer-widget .go-to-top').length > 0) {
       let $goToTop = $('#footer-widget .go-to-top');
@@ -60,6 +151,12 @@
         $('html, body').animate({scrollTop:0}, '1000');
       });
     }
+
+    $('.wpcf7-form.preins-form').each(function(){
+      $(this).find('.privacy-policy-link').on('click', function(event){
+        larula_handle_show_proteccion_datos(event);
+      });
+    });
 
   });
 } (jQuery) );

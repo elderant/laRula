@@ -1,11 +1,13 @@
 <?php 
 
-include( '/inc/admin/admin.php' );
+include( dirname( __FILE__ ) . '/inc/admin/admin.php' );
 
 add_action( 'wp_enqueue_scripts', 'wpb_child_enqueue_styles' );
 function wpb_child_enqueue_styles() {
 	wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 	wp_enqueue_script('wpb-child-main', get_stylesheet_directory_uri() . '/inc/assets/js/main.js', array(), '', true );
+
+	wp_localize_script( 'wpb-child-main', 'ajax_params', array('ajax_url' => admin_url( 'admin-ajax.php' )));
 } 
 
 /******************** General ********************/
@@ -191,7 +193,7 @@ function larula_template_loop_featured_cutom_fields() {
 
 /* replace default value for the name of the taller */
 function larula_wpcf7_contact_form( $instance ) { 
-	if($instance -> id() == 375 && !is_admin()) {
+	if($instance -> id() == 38 && !is_admin()) {
 		if(is_shop()) {
 			global $product;
 			$porperties = $instance -> get_properties();
@@ -201,21 +203,43 @@ function larula_wpcf7_contact_form( $instance ) {
 		}
 		else {
 			$_product = larula_get_featured_product();
+			if(strcasecmp($_product -> get_type(), 'variation') == 0) {
+				$parent_id = $_product -> get_parent_id();
+				$product_pdf_url = get_field( 'taller_info_pdf', $parent_id );
+			}
+			else {
+				$product_pdf_url = get_field( 'taller_info_pdf', $_product -> get_id() );
+			}
+
 			$porperties = $instance -> get_properties();
 		
 			$porperties['form'] = str_replace('DefaultValue', $_product->get_name(), $porperties['form']);
+			$porperties['form'] = str_replace('<a class="buy-link"></a>','<span>o compra tu entrada aquí </span><a class="buy-link button uppercase" href="http://bit.ly/2DddRO4">comprar</a>', $porperties['form']); 
+			$porperties['form'] = str_replace('<a class="download-link"></a>','<a class="download-link button uppercase" href="' . $product_pdf_url . '" target="_blank">Descargar</a>', $porperties['form']);
 			$instance -> set_properties($porperties);
 		}
 	}
 }
 add_action( 'wpcf7_contact_form', 'larula_wpcf7_contact_form', 10, 1 ); 
 
+function larula_get_privacy_policy_html() {
+	$_post = get_post(3);
+
+	error_log('post on ajax call : ' . print_r($_post,1));
+
+	echo '<div class="modal-dialog privacy-policy"><h3 class="post_title">' . $_post -> post_title . '</h3>' . $_post -> post_content . '</div>';
+	die();
+}
+add_action( 'wp_ajax_nopriv_get_privacy_policy_html', 'larula_get_privacy_policy_html' );
+add_action( 'wp_ajax_get_privacy_policy_html', 'larula_get_privacy_policy_html' );
+
+
 function larula_template_loop_featured_add_to_cart() {
 	global $product, $post;
 	$_product = $post -> child_featured;
 
 	if (strcasecmp( $product -> get_type(), 'variation' ) == 0) {
-		$_product -> button_html = '<a class="button alt" href="http://localhost/larula/checkout/?';
+		$_product -> button_html = '<a class="button alt" href="/checkout/?';
 		
 		$url = 'add-to-cart=' . $_product -> parent_object -> get_id() . '&variation_id=' . $_product -> get_id();
 		$attribures = $_product -> get_attributes();
@@ -228,7 +252,7 @@ function larula_template_loop_featured_add_to_cart() {
 		$_product -> button_html .= $url . '">' . __('Comprar', 'larula') . '</a>';
 	}
 	else {
-		$_product -> button_html = '<a class="button alt" href="http://localhost/larula/checkout/?';
+		$_product -> button_html = '<a class="button alt" href="/checkout/?';
 		$url = 'add-to-cart=' . $_product -> parent_object -> get_id() . '&variation_id=' . $_product -> get_id();
 		$_product -> button_html .= $url . '">' . __('Comprar', 'larula') . '</a>';
 	}
