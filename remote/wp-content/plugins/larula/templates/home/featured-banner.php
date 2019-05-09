@@ -3,6 +3,8 @@
 ?>
 <div class="banner-content">
   <div class="row">
+    <h2 name="promoted_workshop" class="hidden"><?php echo __('Taller', 'larula') . ' ' . $larula_args -> parent_product -> get_name(); ?></h2>
+    <p class="workshop_description hidden"><?php echo $larula_args -> parent_product->get_description(); ?></p>
     <div class="taller-image">
       <?php $image = get_field( 'featured_banner_image', $larula_args -> parent_product -> get_id() );?> 
       <img  class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" 

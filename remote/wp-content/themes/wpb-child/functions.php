@@ -17,6 +17,55 @@ function larula_post_background_title() {
 	return $background_title;
 }
 
+function add_facebook_pixel() {
+	echo 
+		"<!-- Facebook Pixel Code -->" .
+		"<script>" .
+			"!function(f,b,e,v,n,t,s) " .
+			"{if(f.fbq)return;n=f.fbq=function(){n.callMethod?" .
+			"n.callMethod.apply(n,arguments):n.queue.push(arguments)};" .
+			"if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';" .
+			"n.queue=[];t=b.createElement(e);t.async=!0;" .
+			"t.src=v;s=b.getElementsByTagName(e)[0];" .
+			"s.parentNode.insertBefore(t,s)}(window,document,'script'," .
+			"'https://connect.facebook.net/en_US/fbevents.js');" .
+			"fbq('init', '286873408901392');" .
+			"fbq('track', 'PageView');" .
+	"</script>" .
+	'<noscript>' .
+		'<img height="1" width="1" '.
+		'src="https://www.facebook.com/tr?id=286873408901392&ev=PageView&noscript=1"/>' .
+	'</noscript>' .
+	'<!-- End Facebook Pixel Code -->';
+}
+add_action( 'wp_head', 'add_facebook_pixel' );
+
+
+function add_google_tracking() {
+	echo 
+	'<!-- Global site tag (gtag.js) - Google Analytics -->' .
+		'<script async src="https://www.googletagmanager.com/gtag/js?id=UA-43031018-1"></script>' .
+		'<script>' .
+			'window.dataLayer = window.dataLayer || [];' .
+			'function gtag(){dataLayer.push(arguments);}' .
+			"gtag('js', new Date());" .
+			"gtag('config', 'UA-43031018-1');" .
+		'</script>' .
+	'<!-- END - Google Analytics -->';
+
+}
+add_action( 'larula_priority_metatags', 'add_google_tracking', 0 );
+
+function add_keywords() {
+	if ( is_home() ) {  
+		echo '<meta name=”keywords” content=”Charlas emprendimiento, Talleres emprendimiento, ' .
+		'Educación, Emprendimiento, Talleres empresariales, Transformación Digital, ' .
+		'Transformación empresarial, Inversión, Ventas, Habilidades blandas, Inteligencia artificial, '.
+		'Entrenamiento equipos” />';
+	} 
+	
+}
+
 /******************** shop display ********************/
 //page title
 add_filter('woocommerce_show_page_title', function() {
@@ -224,9 +273,6 @@ add_action( 'wpcf7_contact_form', 'larula_wpcf7_contact_form', 10, 1 );
 
 function larula_get_privacy_policy_html() {
 	$_post = get_post(3);
-
-	error_log('post on ajax call : ' . print_r($_post,1));
-
 	echo '<div class="modal-dialog privacy-policy"><h3 class="post_title">' . $_post -> post_title . '</h3>' . $_post -> post_content . '</div>';
 	die();
 }

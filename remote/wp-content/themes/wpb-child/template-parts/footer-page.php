@@ -12,14 +12,14 @@
 			<div class="connecting-the-dots">
 				<img src="/wp-content/uploads/footer-logo-connectingthedots.jpg" alt="Connecting the dots">
 			</div> -->
-			<div class="universidad-central">
+			<!-- <div class="universidad-central">
 				<img src="/wp-content/uploads/footer-logo-ucentral.png" alt="Universidad central">
-			</div>
+			</div> -->
 			<div class="tinkko">
 				<img src="/wp-content/uploads/footer-logo-tinkko.png" alt="phylo">
 			</div>
 			<div class="pylo">
-				<img src="/wp-content/uploads/Phylo-Legal-Logo-Black.png" alt="phylo">
+				<img src="/wp-content/uploads/footer-logo-phylo.png" alt="phylo">
 			</div>
 			<div class="larula">
 				<img src="/wp-content/uploads/page-logo.png" alt="La rula taller">

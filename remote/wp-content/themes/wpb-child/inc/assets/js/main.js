@@ -34,6 +34,10 @@
     });
   }
 
+  jQuery.fn.isMobile = function(){
+    return $(window).width() <= 1030;
+  };
+
   var larula_handle_show_proteccion_datos = function(event) {
     // Add modal dialog if necesary
     let $modal = $('body > .modal');
@@ -157,6 +161,13 @@
         larula_handle_show_proteccion_datos(event);
       });
     });
+
+    if($('.page-section.about-us').length > 0 && jQuery.fn.isMobile()) {
+      // videoObject = $('.page-section.about-us video');
+      // videoObject.prop('muted', true); 
+      // videoObject.attr('data-keepplaying', '');
+      // videoObject[0].play();
+    }
 
   });
 } (jQuery) );

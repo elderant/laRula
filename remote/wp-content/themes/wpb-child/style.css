@@ -1284,7 +1284,7 @@ body .modal .modal-dialog.privacy-policy em {
 
 	.entry-footer .grid-container {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
 		align-items: center;
 	}
 	
@@ -1301,7 +1301,7 @@ body .modal .modal-dialog.privacy-policy em {
 	}
 
 	.entry-footer .grid-container > div img {
-		max-height: 90px;
+		max-height: 100px;
 		max-width: 100%;
 	}
 }
